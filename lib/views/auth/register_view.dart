@@ -78,7 +78,9 @@ class RegisterView extends ConsumerWidget {
                 4.sH,
                 AppButton(
                   title: "Sign Up",
-                  onTap: () {},
+                  onTap: () {
+                    context.push(AppRoutes.home);
+                  },
                 ),
                 3.sH,
                 Row(

@@ -67,7 +67,9 @@ class ForgotPasswordView extends ConsumerWidget {
                 4.sH,
                 AppButton(
                   title: "Send",
-                  onTap: () {},
+                  onTap: () {
+                    context.push(AppRoutes.home);
+                  },
                 ),
                 3.sH,
                 Row(
