@@ -1,143 +1,122 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
 
 class AppTextTheme {
   AppTextTheme._();
 
-  static const String fontFamily = 'Metropolis';
-
   static TextTheme lightTextTheme = TextTheme(
-    headlineLarge: TextStyle(
-      fontFamily: fontFamily,
+    headlineLarge: GoogleFonts.dmSans(
       fontSize: 32.0,
       fontWeight: FontWeight.bold,
       color: AppColors.blackColor,
     ),
-    headlineMedium: TextStyle(
-      fontFamily: fontFamily,
+    headlineMedium: GoogleFonts.dmSans(
       fontSize: 24.0,
       fontWeight: FontWeight.w500,
       color: AppColors.blackColor,
     ),
-    headlineSmall: TextStyle(
-      fontFamily: fontFamily,
+    headlineSmall: GoogleFonts.dmSans(
       fontSize: 18.0,
       fontWeight: FontWeight.w500,
       color: AppColors.blackColor,
     ),
-    titleLarge: TextStyle(
-      fontFamily: fontFamily,
+    titleLarge: GoogleFonts.dmSans(
       fontSize: 16.0,
       fontWeight: FontWeight.w600,
       color: AppColors.blackColor,
     ),
-    titleMedium: TextStyle(
-      fontFamily: fontFamily,
+    titleMedium: GoogleFonts.dmSans(
       fontSize: 16.0,
       fontWeight: FontWeight.w500,
       color: AppColors.blackColor,
     ),
-    titleSmall: TextStyle(
-      fontFamily: fontFamily,
+    titleSmall: GoogleFonts.dmSans(
       fontSize: 16.0,
       fontWeight: FontWeight.w400,
       color: AppColors.blackColor,
     ),
-    bodyLarge: TextStyle(
-      fontFamily: fontFamily,
+    bodyLarge: GoogleFonts.dmSans(
       fontSize: 14.0,
       fontWeight: FontWeight.w400,
       color: AppColors.blackColor,
     ),
-    bodyMedium: TextStyle(
-      fontFamily: fontFamily,
+    bodyMedium: GoogleFonts.dmSans(
       fontSize: 14.0,
       fontWeight: FontWeight.normal,
       color: AppColors.blackColor,
     ),
-    bodySmall: TextStyle(
-      fontFamily: fontFamily,
+    bodySmall: GoogleFonts.dmSans(
       fontSize: 14.0,
       fontWeight: FontWeight.w400,
       color: AppColors.blackColor,
     ),
-    labelLarge: TextStyle(
-      fontFamily: fontFamily,
+    labelLarge: GoogleFonts.dmSans(
       fontSize: 12.0,
       fontWeight: FontWeight.w400,
       color: AppColors.blackColor,
     ),
-    labelMedium: TextStyle(
-      fontFamily: fontFamily,
+    labelMedium: GoogleFonts.dmSans(
       fontSize: 12.0,
       fontWeight: FontWeight.w400,
       color: AppColors.blackColor,
     ),
   );
 
+//DARK THEME
+
   static TextTheme darkTextTheme = TextTheme(
-    headlineLarge: TextStyle(
-      fontFamily: fontFamily,
+    headlineLarge: GoogleFonts.dmSans(
       fontSize: 32.0,
       fontWeight: FontWeight.bold,
       color: AppColors.whiteColor,
     ),
-    headlineMedium: TextStyle(
-      fontFamily: fontFamily,
+    headlineMedium: GoogleFonts.dmSans(
       fontSize: 24.0,
       fontWeight: FontWeight.w600,
       color: AppColors.whiteColor,
     ),
-    headlineSmall: TextStyle(
-      fontFamily: fontFamily,
+    headlineSmall: GoogleFonts.dmSans(
       fontSize: 18.0,
       fontWeight: FontWeight.w600,
       color: AppColors.whiteColor,
     ),
-    titleLarge: TextStyle(
-      fontFamily: fontFamily,
+    titleLarge: GoogleFonts.dmSans(
       fontSize: 16.0,
       fontWeight: FontWeight.w600,
       color: AppColors.whiteColor,
     ),
-    titleMedium: TextStyle(
-      fontFamily: fontFamily,
+    titleMedium: GoogleFonts.dmSans(
       fontSize: 16.0,
       fontWeight: FontWeight.w500,
       color: AppColors.whiteColor,
     ),
-    titleSmall: TextStyle(
-      fontFamily: fontFamily,
+    titleSmall: GoogleFonts.dmSans(
       fontSize: 16.0,
       fontWeight: FontWeight.w400,
       color: AppColors.whiteColor,
     ),
-    bodyLarge: TextStyle(
-      fontFamily: fontFamily,
+    bodyLarge: GoogleFonts.dmSans(
       fontSize: 14.0,
       fontWeight: FontWeight.w400,
       color: AppColors.whiteColor,
     ),
-    bodyMedium: TextStyle(
-      fontFamily: fontFamily,
+    bodyMedium: GoogleFonts.dmSans(
       fontSize: 14.0,
       fontWeight: FontWeight.normal,
       color: AppColors.whiteColor,
     ),
-    bodySmall: TextStyle(
-      fontFamily: fontFamily,
+    bodySmall: GoogleFonts.dmSans(
       fontSize: 14.0,
       fontWeight: FontWeight.w400,
       color: AppColors.whiteColor,
     ),
-    labelLarge: TextStyle(
-      fontFamily: fontFamily,
+    labelLarge: GoogleFonts.dmSans(
       fontSize: 12.0,
       fontWeight: FontWeight.w400,
       color: AppColors.whiteColor,
     ),
-    labelMedium: TextStyle(
-      fontFamily: fontFamily,
+    labelMedium: GoogleFonts.dmSans(
       fontSize: 12.0,
       fontWeight: FontWeight.w400,
       color: AppColors.whiteColor,

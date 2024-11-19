@@ -11,8 +11,8 @@ import 'package:home_ease/utils/extension.dart';
 import 'package:home_ease/utils/social_button.dart';
 import 'package:sizer/sizer.dart';
 
-class RegisterView extends ConsumerWidget {
-  RegisterView({super.key});
+class ForgotPasswordView extends ConsumerWidget {
+  ForgotPasswordView({super.key});
 
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
@@ -39,7 +39,7 @@ class RegisterView extends ConsumerWidget {
                     ),
                     const Spacer(),
                     Text(
-                      "Let's get started",
+                      "New Password",
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const Spacer(),
@@ -47,37 +47,26 @@ class RegisterView extends ConsumerWidget {
                 ),
                 7.sH,
                 const AppTextfield(
-                  label: "Username",
-                  textInputType: TextInputType.name,
-                ),
-                2.sH,
-                const AppTextfield(
                   label: "Email",
                   textInputType: TextInputType.emailAddress,
                 ),
                 2.sH,
                 AppTextfield(
-                  label: "Password",
+                  label: "Enter New Password",
                   controller: passwordController,
                   obscureText: true,
                   textInputType: TextInputType.visiblePassword,
                 ),
-                const SizedBox(height: 16.0),
+                2.sH,
                 AppTextfield(
                   label: "Confirm Password",
-                  controller: confirmPasswordController,
+                  controller: passwordController,
                   obscureText: true,
                   textInputType: TextInputType.visiblePassword,
                 ),
-                3.sH,
-                Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque quis elit tellus. Nunc aliquam sit",
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  textAlign: TextAlign.center,
-                ),
                 4.sH,
                 AppButton(
-                  title: "Sign Up",
+                  title: "Send",
                   onTap: () {},
                 ),
                 3.sH,
@@ -118,11 +107,11 @@ class RegisterView extends ConsumerWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        context.push(AppRoutes.login);
+                        context.push(AppRoutes.register);
                       },
                       child: Text(
-                        "Sign In",
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        "Sign Up",
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
                               color: AppColors.primaryColor,
                             ),
                       ),

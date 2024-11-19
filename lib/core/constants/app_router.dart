@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:home_ease/core/constants/app_wrapper_screen.dart';
+import 'package:home_ease/views/auth/forgot_password_view.dart';
 import 'package:home_ease/views/auth/login_view.dart';
 import 'package:home_ease/views/auth/register_view.dart';
 import 'package:home_ease/views/cart/cart_view.dart';
@@ -25,6 +26,7 @@ abstract class AppRoutes {
   static String get onboarding => '/onboard';
   static String get login => '/login';
   static String get register => '/register';
+  static String get forgotPassword => '/forgotPassword';
   static String get home => '/home';
   static String get profile => '/profile';
   static String get cart => '/cart';
@@ -76,11 +78,15 @@ class CustomNavigationHelper {
     ),
     GoRoute(
       path: AppRoutes.login,
-      builder: (context, state) => const LoginView(),
+      builder: (context, state) => LoginView(),
     ),
     GoRoute(
       path: AppRoutes.register,
-      builder: (context, state) => const RegisterView(),
+      builder: (context, state) => RegisterView(),
+    ),
+    GoRoute(
+      path: AppRoutes.forgotPassword,
+      builder: (context, state) => ForgotPasswordView(),
     ),
     StatefulShellRoute.indexedStack(
       parentNavigatorKey: parentNavigatorKey,

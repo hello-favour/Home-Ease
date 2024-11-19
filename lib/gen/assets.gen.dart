@@ -18,6 +18,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow-right.svg
   String get arrowRight => 'assets/icons/arrow-right.svg';
 
+  /// File path: assets/icons/google.svg
+  String get google => 'assets/icons/google.svg';
+
   /// File path: assets/icons/home.svg
   String get home => 'assets/icons/home.svg';
 
@@ -32,7 +35,7 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<String> get values =>
-      [arrowLeft, arrowRight, home, like, profile, shoppingCart];
+      [arrowLeft, arrowRight, google, home, like, profile, shoppingCart];
 }
 
 class $AssetsImagesGen {

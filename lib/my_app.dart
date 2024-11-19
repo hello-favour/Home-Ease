@@ -19,6 +19,11 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
           useMaterial3: true,
         ),
+        // darkTheme: ThemeData(
+        //   primaryColor: AppColors.primaryColor,
+        //   scaffoldBackgroundColor: AppColors.whiteColor,
+        //   textTheme: AppTextTheme.darkTextTheme,
+        // ),
         routerConfig: CustomNavigationHelper.router,
       ),
     );
