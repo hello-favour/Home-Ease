@@ -7,6 +7,7 @@ import 'package:home_ease/views/auth/register_view.dart';
 import 'package:home_ease/views/cart/cart_view.dart';
 import 'package:home_ease/views/favorite/favorite_view.dart';
 import 'package:home_ease/views/home/home_view.dart';
+import 'package:home_ease/views/home/sofa_view.dart';
 import 'package:home_ease/views/onboarding/splash_view.dart';
 import 'package:home_ease/views/onboarding/onboarding_view.dart';
 import 'package:home_ease/views/profile/profile_view.dart';
@@ -31,6 +32,7 @@ abstract class AppRoutes {
   static String get profile => '/profile';
   static String get cart => '/cart';
   static String get favorite => '/favorite';
+  static String get sofa => '/sofa';
 }
 
 final GlobalKey<NavigatorState> parentNavigatorKey =
@@ -60,7 +62,7 @@ class CustomNavigationHelper {
     // Router initialization happens here.
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
-      initialLocation: AppRoutes.splash,
+      initialLocation: AppRoutes.home,
       routes: routes,
     );
   }
@@ -87,6 +89,10 @@ class CustomNavigationHelper {
     GoRoute(
       path: AppRoutes.forgotPassword,
       builder: (context, state) => ForgotPasswordView(),
+    ),
+    GoRoute(
+      path: AppRoutes.sofa,
+      builder: (context, state) => const SofaView(),
     ),
     StatefulShellRoute.indexedStack(
       parentNavigatorKey: parentNavigatorKey,

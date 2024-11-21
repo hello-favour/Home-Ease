@@ -11,6 +11,12 @@ class ProfileView extends ConsumerStatefulWidget {
 class _ProfileViewState extends ConsumerState<ProfileView> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Scaffold(
+      body: Column(
+        children: [
+          Text("Profile"),
+        ],
+      ),
+    );
   }
 }

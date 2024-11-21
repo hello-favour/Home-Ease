@@ -33,13 +33,20 @@ class $AssetsIconsGen {
   /// File path: assets/icons/shopping-cart.svg
   String get shoppingCart => 'assets/icons/shopping-cart.svg';
 
+  /// File path: assets/icons/sofa.png
+  AssetGenImage get sofa => const AssetGenImage('assets/icons/sofa.png');
+
   /// List of all assets
-  List<String> get values =>
-      [arrowLeft, arrowRight, google, home, like, profile, shoppingCart];
+  List<dynamic> get values =>
+      [arrowLeft, arrowRight, google, home, like, profile, shoppingCart, sofa];
 }
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
+
+  /// File path: assets/images/Armchair.png
+  AssetGenImage get armchair =>
+      const AssetGenImage('assets/images/Armchair.png');
 
   /// File path: assets/images/cart.png
   AssetGenImage get cart => const AssetGenImage('assets/images/cart.png');
@@ -66,9 +73,34 @@ class $AssetsImagesGen {
   /// File path: assets/images/image-6.png
   AssetGenImage get image6 => const AssetGenImage('assets/images/image-6.png');
 
+  /// File path: assets/images/offer-1.png
+  AssetGenImage get offer1 => const AssetGenImage('assets/images/offer-1.png');
+
+  /// File path: assets/images/offer-2.png
+  AssetGenImage get offer2 => const AssetGenImage('assets/images/offer-2.png');
+
+  /// File path: assets/images/offer-3.png
+  AssetGenImage get offer3 => const AssetGenImage('assets/images/offer-3.png');
+
+  /// File path: assets/images/offer-4.png
+  AssetGenImage get offer4 => const AssetGenImage('assets/images/offer-4.png');
+
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [cart, getstarted, image1, image2, image3, image4, image5, image6];
+  List<AssetGenImage> get values => [
+        armchair,
+        cart,
+        getstarted,
+        image1,
+        image2,
+        image3,
+        image4,
+        image5,
+        image6,
+        offer1,
+        offer2,
+        offer3,
+        offer4
+      ];
 }
 
 class Assets {

@@ -11,6 +11,12 @@ class FavoriteView extends ConsumerStatefulWidget {
 class _FavoriteViewState extends ConsumerState<FavoriteView> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Scaffold(
+      body: Column(
+        children: [
+          Text("Favorite"),
+        ],
+      ),
+    );
   }
 }

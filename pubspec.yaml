@@ -48,6 +48,9 @@ dependencies:
   dotted_line: ^3.2.3
   dotted_border: ^2.1.0
   iconsax: ^0.0.8
+  carousel_slider: ^5.0.0
+  dots_indicator: ^3.0.0
+  flutter_staggered_animations: ^1.1.1
 
 dev_dependencies:
   flutter_test:

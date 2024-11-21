@@ -11,6 +11,12 @@ class CartView extends ConsumerStatefulWidget {
 class _CartViewState extends ConsumerState<CartView> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Scaffold(
+      body: Column(
+        children: [
+          Text("Cart"),
+        ],
+      ),
+    );
   }
 }
