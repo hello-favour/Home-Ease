@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
+import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/gen/assets.gen.dart';
 import 'package:home_ease/models/categories_model.dart';
 import 'package:home_ease/utils/animation_function.dart';
@@ -131,7 +133,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 ),
                 2.sH,
                 RowText(
-                  onTap: () {},
+                  onTap: () {
+                    context.push(AppRoutes.popularProduct);
+                  },
                   title: "Popular Products",
                 ),
                 2.sH,
@@ -159,7 +163,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 ),
                 2.sH,
                 RowText(
-                  onTap: () {},
+                  onTap: () {
+                    context.push(AppRoutes.newArrival);
+                  },
                   title: "New Arrival",
                 ),
                 2.sH,
@@ -187,7 +193,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 ),
                 2.sH,
                 RowText(
-                  onTap: () {},
+                  onTap: () {
+                    context.push(AppRoutes.recommendProduct);
+                  },
                   title: "Recommended for you",
                 ),
                 2.sH,

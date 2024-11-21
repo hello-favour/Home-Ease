@@ -33,6 +33,9 @@ abstract class AppRoutes {
   static String get cart => '/cart';
   static String get favorite => '/favorite';
   static String get sofa => '/sofa';
+  static String get popularProduct => '/popularProduct';
+  static String get newArrival => '/newArrival';
+  static String get recommendProduct => '/recommendProduct';
 }
 
 final GlobalKey<NavigatorState> parentNavigatorKey =
@@ -89,6 +92,18 @@ class CustomNavigationHelper {
     GoRoute(
       path: AppRoutes.forgotPassword,
       builder: (context, state) => ForgotPasswordView(),
+    ),
+    GoRoute(
+      path: AppRoutes.sofa,
+      builder: (context, state) => const SofaView(),
+    ),
+    GoRoute(
+      path: AppRoutes.sofa,
+      builder: (context, state) => const SofaView(),
+    ),
+    GoRoute(
+      path: AppRoutes.sofa,
+      builder: (context, state) => const SofaView(),
     ),
     GoRoute(
       path: AppRoutes.sofa,
