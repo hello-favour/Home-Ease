@@ -21,8 +21,8 @@ List<CategoriesModel> servicesDataList = [
   ),
   CategoriesModel(
     image: Assets.icons.sofa.path,
-    title: "Chair",
-    routeKey: AppRoutes.chair,
+    title: "Electronics",
+    routeKey: AppRoutes.electronics,
   ),
   CategoriesModel(
     image: Assets.icons.sofa.path,

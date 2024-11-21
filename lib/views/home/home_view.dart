@@ -114,14 +114,14 @@ class _HomeViewState extends ConsumerState<HomeView> {
                           borderRadius: BorderRadius.circular(99),
                           child: Container(
                             padding: const EdgeInsets.all(6),
-                            color: AppColors.blackColor,
+                            color: AppColors.primaryColor,
                             child: Text(
                               "All Products",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!
                                   .copyWith(
-                                    color: AppColors.whiteColor,
+                                    color: AppColors.blackColor,
                                   ),
                             ),
                           ),
@@ -150,7 +150,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       return Padding(
                         padding: const EdgeInsets.only(right: 16),
                         child: ProductCard(
-                          background: AppColors.yellowBgColor,
+                          background: AppColors.greyColor,
                           title: 'Trumin chair',
                           price: 320,
                           rating: 3.5,
@@ -210,7 +210,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       return Padding(
                         padding: const EdgeInsets.only(right: 16),
                         child: ProductCard(
-                          background: AppColors.yellowBgColor,
+                          background: AppColors.greyColor,
                           title: 'Trumin chair',
                           price: 320,
                           rating: 3.5,

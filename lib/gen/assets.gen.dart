@@ -51,6 +51,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/cart.png
   AssetGenImage get cart => const AssetGenImage('assets/images/cart.png');
 
+  /// File path: assets/images/cupboard-1.png
+  AssetGenImage get cupboard1 =>
+      const AssetGenImage('assets/images/cupboard-1.png');
+
   /// File path: assets/images/getstarted.png
   AssetGenImage get getstarted =>
       const AssetGenImage('assets/images/getstarted.png');
@@ -89,6 +93,7 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [
         armchair,
         cart,
+        cupboard1,
         getstarted,
         image1,
         image2,

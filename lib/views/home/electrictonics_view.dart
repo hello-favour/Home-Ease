@@ -8,8 +8,8 @@ import 'package:home_ease/utils/extension.dart';
 import 'package:home_ease/views/home/widgets/category_card.dart';
 import 'package:sizer/sizer.dart';
 
-class CupboardView extends ConsumerWidget {
-  const CupboardView({super.key});
+class ElectrictonicsView extends ConsumerWidget {
+  const ElectrictonicsView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,15 +23,9 @@ class CupboardView extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     context.push(AppRoutes.home);
-                  //   },
-                  //   child: SvgPicture.asset(Assets.icons.arrowLeft),
-                  // ),
                   const Spacer(),
                   Text(
-                    "Cupboard",
+                    "Electricity",
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const Spacer(),
@@ -57,10 +51,10 @@ class CupboardView extends ConsumerWidget {
                       padding: const EdgeInsets.only(bottom: 16),
                       child: CategoryCard(
                         background: AppColors.greyColor,
-                        title: 'Cupboard Cabinet ',
+                        title: 'Freezer/Gas Cooker',
                         price: 320,
                         rating: 3.5,
-                        imagePath: Assets.images.cupboard1.path,
+                        imagePath: Assets.images.image2.path,
                       ),
                     );
                   },
