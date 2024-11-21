@@ -43,7 +43,7 @@ class RecommendProductView extends ConsumerWidget {
                 child: Column(
                   children: [
                     const AppTextfield(
-                      label: "Password",
+                      label: "Search...",
                       obscureText: true,
                       textInputType: TextInputType.visiblePassword,
                     ),
@@ -59,11 +59,11 @@ class RecommendProductView extends ConsumerWidget {
                         ),
                         itemBuilder: (context, index) {
                           return ProductCard(
-                            title: 'Trumin chair',
+                            title: 'Apple Watch',
                             price: 320,
                             rating: 3.5,
-                            imagePath: Assets.images.armchair.path,
-                            background: AppColors.greyBgColor,
+                            imagePath: Assets.images.watch1.path,
+                            background: AppColors.greyColor,
                           );
                         },
                         itemCount: 10,

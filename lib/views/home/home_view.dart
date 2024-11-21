@@ -181,10 +181,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
                         padding: const EdgeInsets.only(right: 16),
                         child: ProductCard(
                           background: AppColors.greyColor,
-                          title: 'Trumin chair',
+                          title: 'Iron',
                           price: 320,
                           rating: 3.5,
-                          imagePath: Assets.images.armchair.path,
+                          imagePath: Assets.images.image4.path,
                         ),
                       );
                     },
@@ -211,10 +211,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
                         padding: const EdgeInsets.only(right: 16),
                         child: ProductCard(
                           background: AppColors.greyColor,
-                          title: 'Trumin chair',
+                          title: 'Apple Watch',
                           price: 320,
                           rating: 3.5,
-                          imagePath: Assets.images.armchair.path,
+                          imagePath: Assets.images.watch1.path,
                         ),
                       );
                     },

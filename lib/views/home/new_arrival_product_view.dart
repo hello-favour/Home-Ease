@@ -65,7 +65,7 @@ class _NewArrivalProductViewState extends ConsumerState<NewArrivalProductView> {
                   child: Column(
                     children: [
                       AppTextfield(
-                        label: "Search Product",
+                        label: "Search...",
                         controller: searchController,
                         obscureText: false,
                         textInputType: TextInputType.text,
@@ -82,10 +82,10 @@ class _NewArrivalProductViewState extends ConsumerState<NewArrivalProductView> {
                           ),
                           itemBuilder: (context, index) {
                             return ProductCard(
-                              title: 'Trumin chair',
+                              title: 'Iron',
                               price: 320,
                               rating: 3.5,
-                              imagePath: Assets.images.armchair.path,
+                              imagePath: Assets.images.image4.path,
                               background: AppColors.greyBgColor,
                             );
                           },

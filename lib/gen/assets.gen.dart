@@ -89,6 +89,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/offer-4.png
   AssetGenImage get offer4 => const AssetGenImage('assets/images/offer-4.png');
 
+  /// File path: assets/images/watch-1.png
+  AssetGenImage get watch1 => const AssetGenImage('assets/images/watch-1.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         armchair,
@@ -104,7 +107,8 @@ class $AssetsImagesGen {
         offer1,
         offer2,
         offer3,
-        offer4
+        offer4,
+        watch1
       ];
 }
 
