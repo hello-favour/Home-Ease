@@ -80,8 +80,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                         index,
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(
-                                context, categoriesData.routeKey!);
+                            context.go(categoriesData.routeKey!);
                           },
                           child: ServicesCommon(
                             modelData: categoriesData,
@@ -181,7 +180,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       return Padding(
                         padding: const EdgeInsets.only(right: 16),
                         child: ProductCard(
-                          background: AppColors.blueBgColor,
+                          background: AppColors.greyColor,
                           title: 'Trumin chair',
                           price: 320,
                           rating: 3.5,
