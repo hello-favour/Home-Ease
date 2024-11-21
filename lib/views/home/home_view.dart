@@ -62,8 +62,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 ),
                 const OffersList(),
                 2.sH,
-                RowText(
-                  onTap: () {},
+                const RowText(
+                  viewAll: false,
                   title: "Shop By Category",
                 ),
                 2.sH,
@@ -99,8 +99,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
                   ),
                 ),
                 1.sH,
-                RowText(
-                  onTap: () {},
+                const RowText(
+                  viewAll: false,
                   title: "Flash Sale",
                 ),
                 2.sH,

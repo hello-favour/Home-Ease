@@ -3,11 +3,13 @@ import 'package:home_ease/core/constants/app_colors.dart';
 
 class RowText extends StatelessWidget {
   final String title;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
+  final bool viewAll;
   const RowText({
     super.key,
     required this.title,
-    required this.onTap,
+    this.onTap,
+    this.viewAll = true,
   });
 
   @override
@@ -19,15 +21,16 @@ class RowText extends StatelessWidget {
           title,
           style: Theme.of(context).textTheme.headlineSmall,
         ),
-        GestureDetector(
-          onTap: onTap,
-          child: Text(
-            "See All",
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: AppColors.primaryColor,
-                ),
+        if (viewAll)
+          GestureDetector(
+            onTap: onTap,
+            child: Text(
+              "See All",
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: AppColors.color3,
+                  ),
+            ),
           ),
-        ),
       ],
     );
   }

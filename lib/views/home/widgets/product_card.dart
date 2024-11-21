@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:home_ease/core/constants/app_colors.dart';
 import 'package:sizer/sizer.dart';
 
 class ProductCard extends StatelessWidget {
@@ -10,13 +9,13 @@ class ProductCard extends StatelessWidget {
   final Color background;
 
   const ProductCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.price,
     required this.rating,
     required this.imagePath,
     required this.background,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -112,31 +111,3 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
-
-
-// // Example usage in a grid
-// class ProductGrid extends StatelessWidget {
-//   const ProductGrid({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GridView.builder(
-//       padding: const EdgeInsets.all(16),
-//       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//         crossAxisCount: 2,
-//         childAspectRatio: 0.7,
-//         crossAxisSpacing: 16,
-//         mainAxisSpacing: 16,
-//       ),
-//       itemBuilder: (context, index) {
-//         return const ProductCard(
-//           title: 'Trumin chair',
-//           price: 320,
-//           rating: 3.5,
-//           imagePath: 'assets/images/chair.jpg', // Path to your asset image
-//         );
-//       },
-//       itemCount: 10,
-//     );
-//   }
-// }

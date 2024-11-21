@@ -6,7 +6,13 @@ import 'package:home_ease/views/auth/login_view.dart';
 import 'package:home_ease/views/auth/register_view.dart';
 import 'package:home_ease/views/cart/cart_view.dart';
 import 'package:home_ease/views/favorite/favorite_view.dart';
+import 'package:home_ease/views/home/chair_view.dart';
+import 'package:home_ease/views/home/cupboard_view.dart';
 import 'package:home_ease/views/home/home_view.dart';
+import 'package:home_ease/views/home/lamp_view.dart';
+import 'package:home_ease/views/home/new_arrival_product_view.dart';
+import 'package:home_ease/views/home/popular_product_view.dart';
+import 'package:home_ease/views/home/recommend_product_view.dart';
 import 'package:home_ease/views/home/sofa_view.dart';
 import 'package:home_ease/views/onboarding/splash_view.dart';
 import 'package:home_ease/views/onboarding/onboarding_view.dart';
@@ -36,6 +42,9 @@ abstract class AppRoutes {
   static String get popularProduct => '/popularProduct';
   static String get newArrival => '/newArrival';
   static String get recommendProduct => '/recommendProduct';
+  static String get chair => '/chair';
+  static String get lamp => '/lamp';
+  static String get cupBoard => '/cupBoard';
 }
 
 final GlobalKey<NavigatorState> parentNavigatorKey =
@@ -98,16 +107,28 @@ class CustomNavigationHelper {
       builder: (context, state) => const SofaView(),
     ),
     GoRoute(
-      path: AppRoutes.sofa,
-      builder: (context, state) => const SofaView(),
+      path: AppRoutes.popularProduct,
+      builder: (context, state) => const PopularProductView(),
     ),
     GoRoute(
-      path: AppRoutes.sofa,
-      builder: (context, state) => const SofaView(),
+      path: AppRoutes.newArrival,
+      builder: (context, state) => const NewArrivalProductView(),
     ),
     GoRoute(
-      path: AppRoutes.sofa,
-      builder: (context, state) => const SofaView(),
+      path: AppRoutes.recommendProduct,
+      builder: (context, state) => const RecommendProductView(),
+    ),
+    GoRoute(
+      path: AppRoutes.chair,
+      builder: (context, state) => const ChairView(),
+    ),
+    GoRoute(
+      path: AppRoutes.lamp,
+      builder: (context, state) => const LampView(),
+    ),
+    GoRoute(
+      path: AppRoutes.cupBoard,
+      builder: (context, state) => const CupboardView(),
     ),
     StatefulShellRoute.indexedStack(
       parentNavigatorKey: parentNavigatorKey,

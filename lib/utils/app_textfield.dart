@@ -22,20 +22,22 @@ class AppTextfield extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isObscure =
-        obscureText ? ref.watch(obscureTextProvider(controller!)) : false;
+    // Only watch the provider if both obscureText is true and controller is not null
+    final isObscure = obscureText && controller != null
+        ? ref.watch(obscureTextProvider(controller!))
+        : false;
 
     return Container(
       decoration: BoxDecoration(
         color: AppColors.greyColor,
         borderRadius: BorderRadius.circular(10.sp),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.grey.shade300,
-        //     blurRadius: 2,
-        //     offset: const Offset(0, 2),
-        //   ),
-        // ],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            blurRadius: 2,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: TextField(
         controller: controller,
@@ -46,7 +48,8 @@ class AppTextfield extends ConsumerWidget {
           labelStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: AppColors.blackColor,
               ),
-          suffixIcon: obscureText
+          suffixIcon: obscureText &&
+                  controller != null // Check if controller is not null
               ? GestureDetector(
                   onTap: () {
                     ref
