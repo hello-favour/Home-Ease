@@ -150,12 +150,17 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(right: 16),
-                        child: ProductCard(
-                          background: AppColors.greyColor,
-                          title: 'Trumin chair',
-                          price: 320,
-                          rating: 3.5,
-                          imagePath: Assets.images.armchair.path,
+                        child: GestureDetector(
+                          onTap: () {
+                            context.push(AppRoutes.details);
+                          },
+                          child: ProductCard(
+                            background: AppColors.greyColor,
+                            title: 'Trumin chair',
+                            price: 320,
+                            rating: 3.5,
+                            imagePath: Assets.images.armchair.path,
+                          ),
                         ),
                       );
                     },
@@ -181,12 +186,17 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(right: 16),
-                        child: ProductCard(
-                          background: AppColors.greyColor,
-                          title: 'Iron',
-                          price: 320,
-                          rating: 3.5,
-                          imagePath: Assets.images.image4.path,
+                        child: GestureDetector(
+                          onTap: () {
+                            context.push(AppRoutes.details);
+                          },
+                          child: ProductCard(
+                            background: AppColors.greyColor,
+                            title: 'Iron',
+                            price: 320,
+                            rating: 3.5,
+                            imagePath: Assets.images.image4.path,
+                          ),
                         ),
                       );
                     },
@@ -212,12 +222,17 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(right: 16),
-                        child: ProductCard(
-                          background: AppColors.greyColor,
-                          title: 'Apple Watch',
-                          price: 320,
-                          rating: 3.5,
-                          imagePath: Assets.images.watch1.path,
+                        child: GestureDetector(
+                          onTap: () {
+                            context.push(AppRoutes.details);
+                          },
+                          child: ProductCard(
+                            background: AppColors.greyColor,
+                            title: 'Apple Watch',
+                            price: 320,
+                            rating: 3.5,
+                            imagePath: Assets.images.watch1.path,
+                          ),
                         ),
                       );
                     },

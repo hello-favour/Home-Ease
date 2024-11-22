@@ -5,6 +5,7 @@ import 'package:home_ease/views/auth/forgot_password_view.dart';
 import 'package:home_ease/views/auth/login_view.dart';
 import 'package:home_ease/views/auth/register_view.dart';
 import 'package:home_ease/views/cart/cart_view.dart';
+import 'package:home_ease/views/detail/product_detail_view.dart';
 import 'package:home_ease/views/favorite/favorite_view.dart';
 import 'package:home_ease/views/home/electrictonics_view.dart';
 import 'package:home_ease/views/home/cupboard_view.dart';
@@ -47,6 +48,7 @@ abstract class AppRoutes {
   static String get lamp => '/lamp';
   static String get cupBoard => '/cupBoard';
   static String get setting => '/setting';
+  static String get details => '/details';
 }
 
 final GlobalKey<NavigatorState> parentNavigatorKey =
@@ -135,6 +137,10 @@ class CustomNavigationHelper {
     GoRoute(
       path: AppRoutes.setting,
       builder: (context, state) => const SettingView(),
+    ),
+    GoRoute(
+      path: AppRoutes.details,
+      builder: (context, state) => const ProductDetailView(),
     ),
     StatefulShellRoute.indexedStack(
       parentNavigatorKey: parentNavigatorKey,

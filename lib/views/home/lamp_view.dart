@@ -55,12 +55,17 @@ class LampView extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16),
-                      child: CategoryCard(
-                        background: AppColors.greyColor,
-                        title: 'Lamp',
-                        price: 320,
-                        rating: 3.5,
-                        imagePath: Assets.images.image6.path,
+                      child: GestureDetector(
+                        onTap: () {
+                          context.push(AppRoutes.details);
+                        },
+                        child: CategoryCard(
+                          background: AppColors.greyColor,
+                          title: 'Lamp',
+                          price: 320,
+                          rating: 3.5,
+                          imagePath: Assets.images.image6.path,
+                        ),
                       ),
                     );
                   },

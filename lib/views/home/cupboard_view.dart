@@ -55,12 +55,17 @@ class CupboardView extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16),
-                      child: CategoryCard(
-                        background: AppColors.greyColor,
-                        title: 'Cupboard Cabinet ',
-                        price: 320,
-                        rating: 3.5,
-                        imagePath: Assets.images.cupboard1.path,
+                      child: GestureDetector(
+                        onTap: () {
+                          context.push(AppRoutes.details);
+                        },
+                        child: CategoryCard(
+                          background: AppColors.greyColor,
+                          title: 'Cupboard Cabinet ',
+                          price: 320,
+                          rating: 3.5,
+                          imagePath: Assets.images.cupboard1.path,
+                        ),
                       ),
                     );
                   },

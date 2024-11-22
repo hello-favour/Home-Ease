@@ -49,12 +49,17 @@ class ElectrictonicsView extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16),
-                      child: CategoryCard(
-                        background: AppColors.greyColor,
-                        title: 'Freezer/Gas Cooker',
-                        price: 320,
-                        rating: 3.5,
-                        imagePath: Assets.images.image2.path,
+                      child: GestureDetector(
+                        onTap: () {
+                          context.push(AppRoutes.details);
+                        },
+                        child: CategoryCard(
+                          background: AppColors.greyColor,
+                          title: 'Freezer/Gas Cooker',
+                          price: 320,
+                          rating: 3.5,
+                          imagePath: Assets.images.image2.path,
+                        ),
                       ),
                     );
                   },
