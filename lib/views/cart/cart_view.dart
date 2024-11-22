@@ -39,7 +39,7 @@ class _CartViewState extends ConsumerState<CartView> {
                   ),
                   const Spacer(),
                   Text(
-                    "Cart",
+                    "My Cart",
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const Spacer(),
