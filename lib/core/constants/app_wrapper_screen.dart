@@ -112,9 +112,9 @@ class _AppWrapperScreenState extends State<AppWrapperScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _buildNavItem(0, Assets.icons.home),
-              _buildNavItem(1, Assets.icons.profile),
-              _buildNavItem(2, Assets.icons.shoppingCart),
-              _buildNavItem(3, Assets.icons.like),
+              _buildNavItem(1, Assets.icons.shoppingCart),
+              _buildNavItem(2, Assets.icons.like),
+              _buildNavItem(3, Assets.icons.profile),
             ],
           ),
         ),

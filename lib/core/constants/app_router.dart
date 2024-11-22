@@ -17,6 +17,7 @@ import 'package:home_ease/views/home/sofa_view.dart';
 import 'package:home_ease/views/onboarding/splash_view.dart';
 import 'package:home_ease/views/onboarding/onboarding_view.dart';
 import 'package:home_ease/views/profile/profile_view.dart';
+import 'package:home_ease/views/profile/setting_view.dart';
 
 Page getPage({
   required Widget child,
@@ -45,6 +46,7 @@ abstract class AppRoutes {
   static String get electronics => '/electronics';
   static String get lamp => '/lamp';
   static String get cupBoard => '/cupBoard';
+  static String get setting => '/setting';
 }
 
 final GlobalKey<NavigatorState> parentNavigatorKey =
@@ -53,12 +55,12 @@ final GlobalKey<NavigatorState> parentNavigatorKey =
 final GlobalKey<NavigatorState> homeTabNavigatorKey =
     GlobalKey<NavigatorState>();
 
-final GlobalKey<NavigatorState> profileNavigatorKey =
-    GlobalKey<NavigatorState>();
-
 final GlobalKey<NavigatorState> cartNavigatorKey = GlobalKey<NavigatorState>();
 
 final GlobalKey<NavigatorState> favoriteTabNavigationKey =
+    GlobalKey<NavigatorState>();
+
+final GlobalKey<NavigatorState> profileNavigatorKey =
     GlobalKey<NavigatorState>();
 
 class CustomNavigationHelper {
@@ -130,6 +132,10 @@ class CustomNavigationHelper {
       path: AppRoutes.cupBoard,
       builder: (context, state) => const CupboardView(),
     ),
+    GoRoute(
+      path: AppRoutes.setting,
+      builder: (context, state) => const SettingView(),
+    ),
     StatefulShellRoute.indexedStack(
       parentNavigatorKey: parentNavigatorKey,
       pageBuilder: (
@@ -170,20 +176,6 @@ class CustomNavigationHelper {
           ],
         ),
         StatefulShellBranch(
-          navigatorKey: profileNavigatorKey,
-          routes: [
-            GoRoute(
-              path: AppRoutes.profile,
-              pageBuilder: (context, GoRouterState state) {
-                return getPage(
-                  child: const ProfileView(),
-                  state: state,
-                );
-              },
-            ),
-          ],
-        ),
-        StatefulShellBranch(
           navigatorKey: cartNavigatorKey,
           routes: [
             GoRoute(
@@ -205,6 +197,20 @@ class CustomNavigationHelper {
               pageBuilder: (context, GoRouterState state) {
                 return getPage(
                   child: const FavoriteView(),
+                  state: state,
+                );
+              },
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          navigatorKey: profileNavigatorKey,
+          routes: [
+            GoRoute(
+              path: AppRoutes.profile,
+              pageBuilder: (context, GoRouterState state) {
+                return getPage(
+                  child: const ProfileView(),
                   state: state,
                 );
               },
