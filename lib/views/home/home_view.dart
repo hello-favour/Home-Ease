@@ -143,6 +143,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       ? MediaQuery.of(context).size.height * 0.4
                       : MediaQuery.of(context).size.height * 0.26,
                   child: ListView.builder(
+                    shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.zero,
                     itemCount: 10,
@@ -173,6 +174,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       ? MediaQuery.of(context).size.height * 0.4
                       : MediaQuery.of(context).size.height * 0.26,
                   child: ListView.builder(
+                    shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.zero,
                     itemCount: 10,
@@ -203,6 +205,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       ? MediaQuery.of(context).size.height * 0.4
                       : MediaQuery.of(context).size.height * 0.26,
                   child: ListView.builder(
+                    shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.zero,
                     itemCount: 10,
