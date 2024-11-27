@@ -2,12 +2,12 @@ import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/gen/assets.gen.dart';
 
 class CategoriesModel {
-  String? image;
+  String? icon;
   String? title;
   String? routeKey;
 
   CategoriesModel({
-    this.image,
+    this.icon,
     this.title,
     this.routeKey,
   });
@@ -15,22 +15,22 @@ class CategoriesModel {
 
 List<CategoriesModel> servicesDataList = [
   CategoriesModel(
-    image: Assets.icons.sofa.path,
+    icon: Assets.icons.sofa.path,
     title: "Sofa",
     routeKey: AppRoutes.sofa,
   ),
   CategoriesModel(
-    image: Assets.icons.sofa.path,
+    icon: Assets.icons.electronics.path,
     title: "Electronics",
     routeKey: AppRoutes.electronics,
   ),
   CategoriesModel(
-    image: Assets.icons.sofa.path,
+    icon: Assets.icons.lamp.path,
     title: "Lamp",
     routeKey: AppRoutes.lamp,
   ),
   CategoriesModel(
-    image: Assets.icons.sofa.path,
+    icon: Assets.icons.cupboard.path,
     title: "Cupboard",
     routeKey: AppRoutes.cupBoard,
   ),

@@ -93,12 +93,17 @@ class _FavoriteViewState extends ConsumerState<FavoriteView> {
                     mainAxisSpacing: 16,
                   ),
                   itemBuilder: (context, index) {
-                    return ProductCard(
-                      title: 'Trumin chair',
-                      price: 320,
-                      rating: 3.5,
-                      imagePath: Assets.images.armchair.path,
-                      background: AppColors.greyBgColor,
+                    return GestureDetector(
+                      onTap: () {
+                        context.push(AppRoutes.details);
+                      },
+                      child: ProductCard(
+                        title: 'Trumin chair',
+                        price: 320,
+                        rating: 3.5,
+                        imagePath: Assets.images.armchair.path,
+                        background: AppColors.greyBgColor,
+                      ),
                     );
                   },
                   itemCount: 10,

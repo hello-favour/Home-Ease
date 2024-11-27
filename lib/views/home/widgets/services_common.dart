@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
-import 'package:home_ease/gen/assets.gen.dart';
 import 'package:home_ease/models/categories_model.dart';
-import 'package:sizer/sizer.dart';
 
 // ignore: must_be_immutable
 class ServicesCommon extends StatefulWidget {
@@ -21,17 +19,17 @@ class _ServicesCommonState extends State<ServicesCommon> {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(4),
+            padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: AppColors.greyColor,
             ),
             child: Center(
               child: Image.asset(
-                Assets.images.image2.path,
-                height: 6.h,
-                width: 6.w,
-                fit: BoxFit.cover,
+                widget.modelData.icon!,
+                // height: 6.h,
+                // width: 6.w,
+                fit: BoxFit.contain,
               ),
             ),
           ),

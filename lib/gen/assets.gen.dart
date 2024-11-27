@@ -18,11 +18,22 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow-right.svg
   String get arrowRight => 'assets/icons/arrow-right.svg';
 
+  /// File path: assets/icons/cupboard.png
+  AssetGenImage get cupboard =>
+      const AssetGenImage('assets/icons/cupboard.png');
+
+  /// File path: assets/icons/electronics.png
+  AssetGenImage get electronics =>
+      const AssetGenImage('assets/icons/electronics.png');
+
   /// File path: assets/icons/google.svg
   String get google => 'assets/icons/google.svg';
 
   /// File path: assets/icons/home.svg
   String get home => 'assets/icons/home.svg';
+
+  /// File path: assets/icons/lamp.png
+  AssetGenImage get lamp => const AssetGenImage('assets/icons/lamp.png');
 
   /// File path: assets/icons/like.svg
   String get like => 'assets/icons/like.svg';
@@ -37,8 +48,19 @@ class $AssetsIconsGen {
   AssetGenImage get sofa => const AssetGenImage('assets/icons/sofa.png');
 
   /// List of all assets
-  List<dynamic> get values =>
-      [arrowLeft, arrowRight, google, home, like, profile, shoppingCart, sofa];
+  List<dynamic> get values => [
+        arrowLeft,
+        arrowRight,
+        cupboard,
+        electronics,
+        google,
+        home,
+        lamp,
+        like,
+        profile,
+        shoppingCart,
+        sofa
+      ];
 }
 
 class $AssetsImagesGen {
