@@ -10,6 +10,8 @@ class AppTextfield extends ConsumerWidget {
   final TextInputType textInputType;
   final IconData? icon;
   final bool obscureText;
+  final String? Function(String?)? validator;
+  final FocusNode? focusNode;
 
   const AppTextfield({
     super.key,
@@ -17,7 +19,9 @@ class AppTextfield extends ConsumerWidget {
     this.controller,
     this.obscureText = false,
     required this.textInputType,
+    this.validator,
     this.icon,
+    this.focusNode,
   });
 
   @override
@@ -39,7 +43,7 @@ class AppTextfield extends ConsumerWidget {
           ),
         ],
       ),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         obscureText: isObscure,
         keyboardType: textInputType,
@@ -48,8 +52,7 @@ class AppTextfield extends ConsumerWidget {
           labelStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: AppColors.blackColor,
               ),
-          suffixIcon: obscureText &&
-                  controller != null // Check if controller is not null
+          suffixIcon: obscureText && controller != null
               ? GestureDetector(
                   onTap: () {
                     ref
@@ -77,6 +80,7 @@ class AppTextfield extends ConsumerWidget {
             borderSide: BorderSide(color: AppColors.blackColor, width: 1),
           ),
         ),
+        validator: validator,
       ),
     );
   }
