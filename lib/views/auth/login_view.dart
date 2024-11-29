@@ -10,6 +10,7 @@ import 'package:home_ease/utils/app_textfield.dart';
 import 'package:home_ease/utils/extension.dart';
 import 'package:home_ease/utils/social_button.dart';
 import 'package:home_ease/utils/validators.dart';
+import 'package:home_ease/views/auth/controller/auth_controller.dart';
 import 'package:sizer/sizer.dart';
 
 class LoginView extends ConsumerWidget {
@@ -18,11 +19,9 @@ class LoginView extends ConsumerWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // Declare FocusNodes for managing focus
   final emailFocusNode = FocusNode();
   final passwordFocusNode = FocusNode();
 
-  /// Add the FormKey
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -33,7 +32,7 @@ class LoginView extends ConsumerWidget {
           padding: EdgeInsets.symmetric(horizontal: 6.w),
           child: SingleChildScrollView(
             child: Form(
-              key: _formKey, // Attach FormKey to the Form widget
+              key: _formKey,
               child: Column(
                 children: [
                   2.sH,
@@ -98,14 +97,34 @@ class LoginView extends ConsumerWidget {
                   4.sH,
                   AppButton(
                     title: "Login",
-                    onTap: () {
+                    onTap: () async {
                       if (_formKey.currentState?.validate() ?? false) {
-                        /// Form is valid, navigate to home
-                        context.push(AppRoutes.home);
+                        final authController =
+                            ref.read(authControllerProvider.notifier);
+                        final email = emailController.text.trim();
+                        final password = passwordController.text.trim();
+
+                        await authController.signIn(email, password).then((_) {
+                          // Check the current state of the auth controller
+                          final authState = ref.read(authControllerProvider);
+                          authState.whenOrNull(
+                            data: (user) {
+                              if (user != null) {
+                                context.push(AppRoutes.home);
+                              }
+                            },
+                            error: (error, stackTrace) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(error.toString())),
+                              );
+                            },
+                          );
+                        });
                       } else {
-                        /// Form is invalid, show validation errors
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Please fix errors")),
+                          const SnackBar(
+                              content:
+                                  Text("Please fix the errors in the form")),
                         );
                       }
                     },

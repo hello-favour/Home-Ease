@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:home_ease/controllers/auth_controller.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
 import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/gen/assets.gen.dart';
@@ -78,7 +79,7 @@ class ForgotPasswordView extends ConsumerWidget {
                     validator: (value) => Validators.validateConfirmPassword(
                         value, password.text),
                     label: "Confirm Password",
-                    controller: confirmPassword, // Use confirmPassword here
+                    controller: confirmPassword,
                     obscureText: true,
                     textInputType: TextInputType.visiblePassword,
                     focusNode: confirmPasswordFocusNode,
@@ -86,14 +87,32 @@ class ForgotPasswordView extends ConsumerWidget {
                   4.sH,
                   AppButton(
                     title: "Send",
-                    onTap: () {
+                    onTap: () async {
                       if (_formKey.currentState?.validate() ?? false) {
-                        /// Form is valid, navigate to home
-                        context.push(AppRoutes.home);
+                        final authController =
+                            ref.read(authControllerProvider.notifier);
+                        final emailAddress = email.text.trim();
+
+                        await authController
+                            .forgotPassword(emailAddress)
+                            .then((_) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                  "Password reset email sent! Check your inbox."),
+                            ),
+                          );
+                          context.pop();
+                        }).catchError((error) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(error.toString())),
+                          );
+                        });
                       } else {
-                        /// Form is invalid, show validation errors
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Please fix errors")),
+                          const SnackBar(
+                              content:
+                                  Text("Please fix the errors in the form")),
                         );
                       }
                     },

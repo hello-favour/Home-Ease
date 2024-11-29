@@ -51,12 +51,16 @@ dependencies:
   carousel_slider: ^5.0.0
   dots_indicator: ^3.0.0
   flutter_staggered_animations: ^1.1.1
-
+  uuid: ^4.5.1
+  fpdart: ^1.1.1
+  
   #FIREBASE
   firebase_core: ^3.8.0
   firebase_auth: ^5.3.3
   cloud_firestore: ^5.5.0
   firebase_storage: ^12.3.6
+  
+  
 
 dev_dependencies:
   flutter_test:

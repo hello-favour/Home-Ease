@@ -10,6 +10,7 @@ import 'package:home_ease/utils/app_textfield.dart';
 import 'package:home_ease/utils/extension.dart';
 import 'package:home_ease/utils/social_button.dart';
 import 'package:home_ease/utils/validators.dart';
+import 'package:home_ease/views/auth/controller/auth_controller.dart';
 import 'package:sizer/sizer.dart';
 
 class RegisterView extends ConsumerWidget {
@@ -20,7 +21,6 @@ class RegisterView extends ConsumerWidget {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-  // Declare FocusNodes for managing focus
   final emailFocusNode = FocusNode();
   final userNameFocusNode = FocusNode();
   final passwordFocusNode = FocusNode();
@@ -100,9 +100,43 @@ class RegisterView extends ConsumerWidget {
                   4.sH,
                   AppButton(
                     title: "Sign Up",
-                    onTap: () {
+                    onTap: () async {
                       if (_formKey.currentState!.validate()) {
-                        context.push(AppRoutes.home);
+                        final authController =
+                            ref.read(authControllerProvider.notifier);
+                        final username = usernameController.text.trim();
+                        final email = emailController.text.trim();
+                        final password = passwordController.text.trim();
+                        final confirmPassword =
+                            confirmPasswordController.text.trim();
+
+                        if (password != confirmPassword) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Passwords do not match!")),
+                          );
+                          return;
+                        }
+
+                        // Call the signUp method
+                        await authController
+                            .signUp(email, password, username)
+                            .then((_) {
+                          // Navigate to home if successful
+                          final authState = ref.read(authControllerProvider);
+                          authState.whenOrNull(
+                            data: (user) {
+                              if (user != null) {
+                                context.push(AppRoutes.home);
+                              }
+                            },
+                            error: (error, stackTrace) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(error.toString())),
+                              );
+                            },
+                          );
+                        });
                       }
                     },
                   ),

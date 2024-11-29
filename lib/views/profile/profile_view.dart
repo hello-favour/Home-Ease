@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:home_ease/controllers/auth_controller.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
 import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/gen/assets.gen.dart';
@@ -90,8 +91,17 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                     ),
                     2.sH,
                     ProfileRow(
-                      onTap: () {
-                        context.push(AppRoutes.login);
+                      onTap: () async {
+                        final authController =
+                            ref.read(authControllerProvider.notifier);
+
+                        await authController.signOut().then((_) {
+                          context.go(AppRoutes.login);
+                        }).catchError((error) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(error.toString())),
+                          );
+                        });
                       },
                       text: false,
                       title: 'Logout',

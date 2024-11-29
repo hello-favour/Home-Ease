@@ -33,7 +33,12 @@ class _OnboardingViewState extends State<OnboardingView> {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                child: const Text("Skip"),
+                child: Text(
+                  "Skip",
+                  style: Theme.of(context).textTheme.bodySmall!.apply(
+                        color: AppColors.primaryColor,
+                      ),
+                ),
                 onPressed: () {
                   context.push(AppRoutes.register);
                 },
