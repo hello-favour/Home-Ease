@@ -26,62 +26,59 @@ class AppTextfield extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Only watch the provider if both obscureText is true and controller is not null
     final isObscure = obscureText && controller != null
         ? ref.watch(obscureTextProvider(controller!))
         : false;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.greyColor,
-        borderRadius: BorderRadius.circular(10.sp),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade300,
-            blurRadius: 2,
-            offset: const Offset(0, 2),
+    return TextFormField(
+      controller: controller,
+      obscureText: isObscure,
+      keyboardType: textInputType,
+      focusNode: focusNode,
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: AppColors.blackColor,
+            fontWeight: FontWeight.w500,
           ),
-        ],
-      ),
-      child: TextFormField(
-        controller: controller,
-        obscureText: isObscure,
-        keyboardType: textInputType,
-        decoration: InputDecoration(
-          labelText: label,
-          labelStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: AppColors.blackColor,
-              ),
-          suffixIcon: obscureText && controller != null
-              ? GestureDetector(
-                  onTap: () {
-                    ref
-                        .read(obscureTextProvider(controller!).notifier)
-                        .toggle();
-                  },
-                  child: Icon(
-                    isObscure ? Icons.visibility_off : Icons.visibility,
-                    color: AppColors.blackColor,
-                  ),
-                )
-              : (icon != null ? Icon(icon, color: AppColors.blackColor) : null),
-          contentPadding:
-              EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 2.w),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.sp),
-            borderSide: BorderSide.none,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.sp),
-            borderSide: BorderSide.none,
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.sp),
-            borderSide: BorderSide(color: AppColors.blackColor, width: 1),
-          ),
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: AppColors.darkGreyColor,
+              fontWeight: FontWeight.w400,
+            ),
+        suffixIcon: obscureText && controller != null
+            ? GestureDetector(
+                onTap: () {
+                  ref.read(obscureTextProvider(controller!).notifier).toggle();
+                },
+                child: Icon(
+                  isObscure ? Icons.visibility_off : Icons.visibility,
+                  color: AppColors.primaryColor,
+                ),
+              )
+            : (icon != null
+                ? Icon(
+                    icon,
+                    color: AppColors.primaryColor,
+                  )
+                : null),
+        contentPadding:
+            EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 2.5.w),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.sp),
+          borderSide: BorderSide.none,
         ),
-        validator: validator,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.sp),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.sp),
+          borderSide: BorderSide(color: AppColors.primaryColor, width: 1.5),
+        ),
+        filled: true,
+        fillColor: AppColors.greyColor,
       ),
+      validator: validator,
     );
   }
 }

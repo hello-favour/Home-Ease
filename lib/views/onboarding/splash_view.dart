@@ -1,79 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:home_ease/core/constants/app_colors.dart';
 import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/gen/assets.gen.dart';
-import 'package:home_ease/utils/app_button.dart';
-import 'package:home_ease/utils/extension.dart';
+import 'package:home_ease/views/auth/controller/auth_controller.dart';
 import 'package:sizer/sizer.dart';
 
-class SplashView extends ConsumerWidget {
+class SplashView extends ConsumerStatefulWidget {
   const SplashView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SplashView> createState() => _SplashViewState();
+}
+
+class _SplashViewState extends ConsumerState<SplashView> {
+  @override
+  void initState() {
+    super.initState();
+
+    ref.listenManual(
+      authControllerProvider.select((asyncValue) => asyncValue.value),
+      (previous, next) {
+        if (next != null) {
+          Future.delayed(const Duration(seconds: 3), () {
+            if (ref.read(authServiceProvider).isAuthenticated) {
+              context.go(AppRoutes.home);
+            } else {
+              context.go(AppRoutes.getStarted);
+            }
+          });
+        }
+      },
+      fireImmediately: true,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(Assets.images.getstarted.path),
+      body: SafeArea(
+        child: Center(
+          child: Image.asset(
+            Assets.images.cart.path,
             fit: BoxFit.cover,
+            height: 30.h,
+            width: 30.w,
           ),
-        ),
-        child: Stack(
-          clipBehavior: Clip.antiAlias,
-          children: [
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 35.h,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.transparent,
-                      AppColors.blackColor,
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 6.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Enjoy Furniture at \nits finest",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineLarge
-                          ?.copyWith(color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                    2.sH,
-                    AppButton(
-                      title: 'Get Started',
-                      onTap: () {
-                        context.push(AppRoutes.onboarding);
-                      },
-                    ),
-                    2.sH,
-                  ],
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );

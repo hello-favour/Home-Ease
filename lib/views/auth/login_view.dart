@@ -26,6 +26,9 @@ class LoginView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Observe authControllerProvider state
+    final authState = ref.watch(authControllerProvider);
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -96,38 +99,41 @@ class LoginView extends ConsumerWidget {
                   ),
                   4.sH,
                   AppButton(
-                    title: "Login",
-                    onTap: () async {
-                      if (_formKey.currentState?.validate() ?? false) {
-                        final authController =
-                            ref.read(authControllerProvider.notifier);
-                        final email = emailController.text.trim();
-                        final password = passwordController.text.trim();
+                    title: authState.isLoading ? "Logging in..." : "Login",
+                    isDisabled: authState.isLoading,
+                    onTap: authState.isLoading
+                        ? null
+                        : () async {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              final authController =
+                                  ref.read(authControllerProvider.notifier);
+                              final email = emailController.text.trim();
+                              final password = passwordController.text.trim();
 
-                        await authController.signIn(email, password).then((_) {
-                          // Check the current state of the auth controller
-                          final authState = ref.read(authControllerProvider);
-                          authState.whenOrNull(
-                            data: (user) {
-                              if (user != null) {
-                                context.push(AppRoutes.home);
-                              }
-                            },
-                            error: (error, stackTrace) {
+                              await authController
+                                  .signIn(email, password)
+                                  .then((_) {
+                                final userState =
+                                    ref.read(authControllerProvider);
+                                userState.whenOrNull(
+                                  data: (user) {
+                                    context.push(AppRoutes.home);
+                                  },
+                                  error: (error, stackTrace) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(error.toString())),
+                                    );
+                                  },
+                                );
+                              });
+                            } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(error.toString())),
+                                const SnackBar(
+                                    content: Text(
+                                        "Please fix the errors in the form")),
                               );
-                            },
-                          );
-                        });
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content:
-                                  Text("Please fix the errors in the form")),
-                        );
-                      }
-                    },
+                            }
+                          },
                   ),
                   3.sH,
                   Row(
@@ -151,7 +157,23 @@ class LoginView extends ConsumerWidget {
                   ),
                   3.sH,
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      final authController =
+                          ref.read(authControllerProvider.notifier);
+                      authController.signInWithGoogle().then((_) {
+                        final userState = ref.read(authControllerProvider);
+                        userState.whenOrNull(
+                          data: (user) {
+                            context.push(AppRoutes.home);
+                          },
+                          error: (error, stackTrace) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(error.toString())),
+                            );
+                          },
+                        );
+                      });
+                    },
                     child: SocialButton(
                       icon: Assets.icons.google,
                       title: "Sign in with Google",

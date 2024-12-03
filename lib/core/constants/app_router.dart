@@ -5,7 +5,7 @@ import 'package:home_ease/views/auth/forgot_password_view.dart';
 import 'package:home_ease/views/auth/login_view.dart';
 import 'package:home_ease/views/auth/register_view.dart';
 import 'package:home_ease/views/cart/cart_view.dart';
-import 'package:home_ease/views/detail/product_detail_view.dart';
+import 'package:home_ease/views/home/detail/product_detail_view.dart';
 import 'package:home_ease/views/favorite/favorite_view.dart';
 import 'package:home_ease/views/home/electrictonics_view.dart';
 import 'package:home_ease/views/home/cupboard_view.dart';
@@ -15,11 +15,13 @@ import 'package:home_ease/views/home/new_arrival_product_view.dart';
 import 'package:home_ease/views/home/popular_product_view.dart';
 import 'package:home_ease/views/home/recommend_product_view.dart';
 import 'package:home_ease/views/home/sofa_view.dart';
-import 'package:home_ease/views/onboarding/splash_view.dart';
+import 'package:home_ease/views/onboarding/get_started.dart';
 import 'package:home_ease/views/onboarding/onboarding_view.dart';
+import 'package:home_ease/views/onboarding/splash_view.dart';
 import 'package:home_ease/views/profile/profile_view.dart';
 import 'package:home_ease/views/profile/setting_view.dart';
 
+// Page builder utility function
 Page getPage({
   required Widget child,
   required GoRouterState state,
@@ -30,8 +32,10 @@ Page getPage({
   );
 }
 
+// Routes constants
 abstract class AppRoutes {
   static String get splash => '/splash';
+  static String get getStarted => '/getStarted';
   static String get onboarding => '/onboard';
   static String get login => '/login';
   static String get register => '/register';
@@ -51,6 +55,7 @@ abstract class AppRoutes {
   static String get details => '/details';
 }
 
+// Navigator keys
 final GlobalKey<NavigatorState> parentNavigatorKey =
     GlobalKey<NavigatorState>();
 
@@ -75,7 +80,6 @@ class CustomNavigationHelper {
   }
 
   CustomNavigationHelper._internal() {
-    // Router initialization happens here.
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
       initialLocation: AppRoutes.splash,
@@ -89,6 +93,10 @@ class CustomNavigationHelper {
     GoRoute(
       path: AppRoutes.splash,
       builder: (context, state) => const SplashView(),
+    ),
+    GoRoute(
+      path: AppRoutes.getStarted,
+      builder: (context, state) => const GetStartedView(),
     ),
     GoRoute(
       path: AppRoutes.onboarding,
@@ -150,10 +158,11 @@ class CustomNavigationHelper {
         StatefulNavigationShell navigationShell,
       ) {
         return getPage(
-            child: AppWrapperScreen(
-              child: navigationShell,
-            ),
-            state: state);
+          child: AppWrapperScreen(
+            child: navigationShell,
+          ),
+          state: state,
+        );
       },
       branches: [
         StatefulShellBranch(

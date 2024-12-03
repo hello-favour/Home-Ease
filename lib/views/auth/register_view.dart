@@ -30,6 +30,9 @@ class RegisterView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Observe authControllerProvider state
+    final authState = ref.watch(authControllerProvider);
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -99,46 +102,48 @@ class RegisterView extends ConsumerWidget {
                   ),
                   4.sH,
                   AppButton(
-                    title: "Sign Up",
-                    onTap: () async {
-                      if (_formKey.currentState!.validate()) {
-                        final authController =
-                            ref.read(authControllerProvider.notifier);
-                        final username = usernameController.text.trim();
-                        final email = emailController.text.trim();
-                        final password = passwordController.text.trim();
-                        final confirmPassword =
-                            confirmPasswordController.text.trim();
+                    title: authState.isLoading ? "Signing up..." : "Sign Up",
+                    isLoading: authState.isLoading,
+                    isDisabled: authState.isLoading,
+                    onTap: authState.isLoading
+                        ? null
+                        : () async {
+                            if (_formKey.currentState!.validate()) {
+                              final authController =
+                                  ref.read(authControllerProvider.notifier);
+                              final username = usernameController.text.trim();
+                              final email = emailController.text.trim();
+                              final password = passwordController.text.trim();
+                              final confirmPassword =
+                                  confirmPasswordController.text.trim();
 
-                        if (password != confirmPassword) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text("Passwords do not match!")),
-                          );
-                          return;
-                        }
-
-                        // Call the signUp method
-                        await authController
-                            .signUp(email, password, username)
-                            .then((_) {
-                          // Navigate to home if successful
-                          final authState = ref.read(authControllerProvider);
-                          authState.whenOrNull(
-                            data: (user) {
-                              if (user != null) {
-                                context.push(AppRoutes.home);
+                              if (password != confirmPassword) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("Passwords do not match!")),
+                                );
+                                return;
                               }
-                            },
-                            error: (error, stackTrace) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(error.toString())),
-                              );
-                            },
-                          );
-                        });
-                      }
-                    },
+
+                              // Call the signUp method
+                              await authController
+                                  .signUp(email, password, username)
+                                  .then((_) {
+                                final userState =
+                                    ref.read(authControllerProvider);
+                                userState.whenOrNull(
+                                  data: (user) {
+                                    context.push(AppRoutes.home);
+                                  },
+                                  error: (error, stackTrace) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(error.toString())),
+                                    );
+                                  },
+                                );
+                              });
+                            }
+                          },
                   ),
                   3.sH,
                   Row(
@@ -162,7 +167,24 @@ class RegisterView extends ConsumerWidget {
                   ),
                   3.sH,
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      final authController =
+                          ref.read(authControllerProvider.notifier);
+                      authController.signInWithGoogle().then((_) {
+                        final userState = ref.read(authControllerProvider);
+                        userState.whenOrNull(
+                          data: (user) {
+                            context.push(AppRoutes.home);
+                          },
+                          error: (error, stackTrace) {
+                            debugPrint("GOOGLE ERROR:$error");
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(error.toString())),
+                            );
+                          },
+                        );
+                      });
+                    },
                     child: SocialButton(
                       icon: Assets.icons.google,
                       title: "Sign in with Google",

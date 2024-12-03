@@ -4,6 +4,7 @@ import 'package:home_ease/core/constants/app_colors.dart';
 import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/models/onboarding_item.dart';
 import 'package:home_ease/utils/app_button.dart';
+import 'package:home_ease/views/auth/repository/token_repository.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -103,7 +104,14 @@ class _OnboardingViewState extends State<OnboardingView> {
                 title: false ? "Get started" : "Next",
                 onTap: () {
                   if (controller.page == 4) {
+                    TokenRepository().saveOnboardingDetails();
+
                     context.push(AppRoutes.register);
+                  } else {
+                    controller.nextPage(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
                   }
                 },
               ),

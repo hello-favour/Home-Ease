@@ -4,27 +4,47 @@ import 'package:sizer/sizer.dart';
 
 class AppButton extends StatelessWidget {
   final String title;
-  final VoidCallback onTap;
-  const AppButton({super.key, required this.title, required this.onTap});
+  final VoidCallback? onTap;
+  final bool isLoading;
+  final bool isDisabled;
+
+  const AppButton({
+    super.key,
+    required this.title,
+    required this.onTap,
+    this.isLoading = false,
+    this.isDisabled = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: isDisabled || isLoading ? null : onTap,
       child: Container(
-        width: Size.infinite.width,
+        width: double.infinity,
         height: 5.5.h,
         decoration: BoxDecoration(
-          color: AppColors.primaryColor,
+          color: isDisabled || isLoading
+              ? AppColors.greyBgColor
+              : AppColors.primaryColor,
           borderRadius: BorderRadius.circular(99),
         ),
         alignment: Alignment.center,
-        child: Text(
-          title,
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                color: AppColors.blackColor,
+        child: isLoading
+            ? SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  color: AppColors.blackColor,
+                  strokeWidth: 2,
+                ),
+              )
+            : Text(
+                title,
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      color: AppColors.blackColor,
+                    ),
               ),
-        ),
       ),
     );
   }

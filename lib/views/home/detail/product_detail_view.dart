@@ -8,8 +8,8 @@ import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/gen/assets.gen.dart';
 import 'package:home_ease/utils/app_button.dart';
 import 'package:home_ease/utils/extension.dart';
-import 'package:home_ease/views/detail/widgets/build_color_circle.dart';
-import 'package:home_ease/views/detail/widgets/cart_dialog.dart';
+import 'package:home_ease/views/home/detail/widgets/build_color_circle.dart';
+import 'package:home_ease/views/home/detail/widgets/cart_dialog.dart';
 import 'package:sizer/sizer.dart';
 
 class ProductDetailView extends ConsumerStatefulWidget {

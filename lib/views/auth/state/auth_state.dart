@@ -1,18 +1,21 @@
+import 'package:home_ease/models/user_model.dart';
+
 class AuthState {
-  bool isLoading;
-  String? otpId;
+  final bool isLoading;
+  final UserModel? user;
+
   AuthState({
     required this.isLoading,
-    this.otpId,
+    this.user,
   });
 
   AuthState copyWith({
     bool? isLoading,
-    String? otpId,
+    UserModel? user,
   }) {
     return AuthState(
       isLoading: isLoading ?? this.isLoading,
-      otpId: otpId ?? this.otpId,
+      user: user ?? this.user,
     );
   }
 }
