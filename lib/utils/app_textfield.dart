@@ -12,6 +12,7 @@ class AppTextfield extends ConsumerWidget {
   final bool obscureText;
   final String? Function(String?)? validator;
   final FocusNode? focusNode;
+  final String? Function(String?)? onChanged;
 
   const AppTextfield({
     super.key,
@@ -20,6 +21,7 @@ class AppTextfield extends ConsumerWidget {
     this.obscureText = false,
     required this.textInputType,
     this.validator,
+    this.onChanged,
     this.icon,
     this.focusNode,
   });
@@ -78,6 +80,7 @@ class AppTextfield extends ConsumerWidget {
         filled: true,
         fillColor: AppColors.greyColor,
       ),
+      onChanged: onChanged,
       validator: validator,
     );
   }

@@ -4,13 +4,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
 import 'package:home_ease/core/constants/app_router.dart';
+import 'package:home_ease/models/categories_model.dart';
+import 'package:home_ease/utils/animation_function.dart';
 import 'package:home_ease/utils/extension.dart';
 import 'package:home_ease/views/home/controller/user_controller.dart';
 import 'package:home_ease/utils/app_textfield.dart';
 import 'package:home_ease/views/home/widgets/new_arrival_product_widget.dart';
+import 'package:home_ease/views/home/widgets/offers.dart';
 import 'package:home_ease/views/home/widgets/popular_product_widget.dart';
 import 'package:home_ease/views/home/widgets/recommend_product_widget.dart';
 import 'package:home_ease/views/home/widgets/row_text.dart';
+import 'package:home_ease/views/home/widgets/services_common.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeView extends ConsumerStatefulWidget {
@@ -77,6 +81,44 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     const AppTextfield(
                       label: "Search",
                       textInputType: TextInputType.text,
+                    ),
+                    const OffersList(),
+                    2.sH,
+                    const RowText(
+                      viewAll: false,
+                      title: "Shop By Category",
+                    ),
+                    2.sH,
+                    SizedBox(
+                      height: 10.h,
+                      child: GridView.builder(
+                        padding: EdgeInsets.zero,
+                        primary: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: servicesDataList.length,
+                        itemBuilder: (context, index) {
+                          CategoriesModel categoriesData =
+                              servicesDataList[index];
+                          return animationFunction(
+                            index,
+                            GestureDetector(
+                              onTap: () {
+                                context.go(categoriesData.routeKey!);
+                              },
+                              child: ServicesCommon(
+                                modelData: categoriesData,
+                              ),
+                            ),
+                          );
+                        },
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
+                          childAspectRatio: 0.5,
+                          mainAxisExtent: 150,
+                          mainAxisSpacing: 100,
+                        ),
+                      ),
                     ),
                     2.sH,
                     RowText(

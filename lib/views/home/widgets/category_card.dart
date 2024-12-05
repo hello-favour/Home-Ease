@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
 import 'package:home_ease/utils/extension.dart';
@@ -43,17 +44,9 @@ class CategoryCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             child: Container(
               height: double.infinity,
-              child: Image(
-                image: AssetImage(imagePath),
+              child: CachedNetworkImage(
+                imageUrl: imagePath,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.grey[200],
-                    child: const Center(
-                      child: Icon(Icons.error_outline),
-                    ),
-                  );
-                },
               ),
             ),
           ),
@@ -88,7 +81,7 @@ class CategoryCard extends StatelessWidget {
                     Icon(
                       Icons.star,
                       size: 16,
-                      color: AppColors.yellowBgColor,
+                      color: AppColors.primaryColor,
                     ),
                     2.sH,
                     Text(
