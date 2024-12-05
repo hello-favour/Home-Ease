@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
+import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/gen/assets.gen.dart';
 import 'package:home_ease/utils/app_textfield.dart';
 import 'package:home_ease/utils/extension.dart';
+import 'package:home_ease/views/home/controller/product_controller.dart';
 import 'package:home_ease/views/home/widgets/product_card.dart';
 import 'package:sizer/sizer.dart';
 
@@ -14,6 +16,8 @@ class RecommendProductView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final recommendedProducts = ref.watch(recommendedProductsProvider);
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -40,37 +44,55 @@ class RecommendProductView extends ConsumerWidget {
               ),
               2.sH,
               Expanded(
-                child: Column(
-                  children: [
-                    const AppTextfield(
-                      label: "Search...",
-                      obscureText: true,
-                      textInputType: TextInputType.visiblePassword,
+                child: recommendedProducts.when(
+                  loading: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  error: (error, stackTrace) => Center(
+                    child: Text(
+                      'Error: ${error.toString()}',
+                      style: const TextStyle(color: Colors.red),
                     ),
-                    2.sH,
-                    Expanded(
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.7,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
-                        ),
-                        itemBuilder: (context, index) {
-                          return ProductCard(
-                            title: 'Apple Watch',
-                            price: 320,
-                            rating: 3.5,
-                            imagePath: Assets.images.watch1.path,
-                            background: AppColors.greyColor,
-                          );
-                        },
-                        itemCount: 10,
+                  ),
+                  data: (products) => Column(
+                    children: [
+                      const AppTextfield(
+                        label: "Search...",
+                        obscureText: false,
+                        textInputType: TextInputType.text,
                       ),
-                    ),
-                    1.sH,
-                  ],
+                      2.sH,
+                      Expanded(
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.7,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
+                          ),
+                          itemCount: products.length,
+                          itemBuilder: (context, index) {
+                            final product = products[index];
+                            return GestureDetector(
+                              onTap: () {
+                                context.push(AppRoutes.details,
+                                    extra: products[index]);
+                              },
+                              child: ProductCard(
+                                title: product.title,
+                                price: product.price,
+                                rating: product.rating,
+                                imagePath: product.imagePath,
+                                background: AppColors.greyColor,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      1.sH,
+                    ],
+                  ),
                 ),
               ),
             ],

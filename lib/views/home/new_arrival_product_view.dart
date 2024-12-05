@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
+import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/gen/assets.gen.dart';
 import 'package:home_ease/utils/app_textfield.dart';
 import 'package:home_ease/utils/extension.dart';
+import 'package:home_ease/views/home/controller/product_controller.dart';
 import 'package:home_ease/views/home/widgets/product_card.dart';
 import 'package:sizer/sizer.dart';
 
@@ -34,6 +36,8 @@ class _NewArrivalProductViewState extends ConsumerState<NewArrivalProductView> {
 
   @override
   Widget build(BuildContext context) {
+    final newArrivalProducts = ref.watch(newArrivalProductsProvider);
+
     return Scaffold(
       body: SafeArea(
         child: SizedBox(
@@ -62,38 +66,56 @@ class _NewArrivalProductViewState extends ConsumerState<NewArrivalProductView> {
                 ),
                 2.sH,
                 Expanded(
-                  child: Column(
-                    children: [
-                      AppTextfield(
-                        label: "Search...",
-                        controller: searchController,
-                        obscureText: false,
-                        textInputType: TextInputType.text,
+                  child: newArrivalProducts.when(
+                    loading: () => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    error: (error, stackTrace) => Center(
+                      child: Text(
+                        'Error: ${error.toString()}',
+                        style: const TextStyle(color: Colors.red),
                       ),
-                      2.sH,
-                      Expanded(
-                        child: GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.7,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 16,
-                          ),
-                          itemBuilder: (context, index) {
-                            return ProductCard(
-                              title: 'Iron',
-                              price: 320,
-                              rating: 3.5,
-                              imagePath: Assets.images.image4.path,
-                              background: AppColors.greyBgColor,
-                            );
-                          },
-                          itemCount: 10,
+                    ),
+                    data: (products) => Column(
+                      children: [
+                        AppTextfield(
+                          label: "Search...",
+                          controller: searchController,
+                          obscureText: false,
+                          textInputType: TextInputType.text,
                         ),
-                      ),
-                      1.sH,
-                    ],
+                        2.sH,
+                        Expanded(
+                          child: GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.7,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                            ),
+                            itemCount: products.length,
+                            itemBuilder: (context, index) {
+                              final product = products[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  context.push(AppRoutes.details,
+                                      extra: products[index]);
+                                },
+                                child: ProductCard(
+                                  title: product.title,
+                                  price: product.price,
+                                  rating: product.rating,
+                                  imagePath: product.imagePath,
+                                  background: AppColors.greyBgColor,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        1.sH,
+                      ],
+                    ),
                   ),
                 ),
               ],

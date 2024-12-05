@@ -1,13 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
+import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/utils/extension.dart';
 import 'package:home_ease/views/home/controller/user_controller.dart';
 import 'package:home_ease/utils/app_textfield.dart';
 import 'package:home_ease/views/home/widgets/new_arrival_product_widget.dart';
 import 'package:home_ease/views/home/widgets/popular_product_widget.dart';
 import 'package:home_ease/views/home/widgets/recommend_product_widget.dart';
+import 'package:home_ease/views/home/widgets/row_text.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeView extends ConsumerStatefulWidget {
@@ -65,7 +68,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                           ],
                         ),
                         Text(
-                          "Find your perfect \nfurniture",
+                          "Find your perfect \nproduct",
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                       ],
@@ -76,7 +79,13 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       textInputType: TextInputType.text,
                     ),
                     2.sH,
-                    // Popular Products Widget
+                    RowText(
+                      onTap: () {
+                        context.push(AppRoutes.popularProduct);
+                      },
+                      title: "Popular Products",
+                    ),
+                    2.sH,
                     SizedBox(
                       height: MediaQuery.of(context).size.height < 700
                           ? MediaQuery.of(context).size.height * 0.4
@@ -84,7 +93,13 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       child: const PopularProductWidget(),
                     ),
                     2.sH,
-                    // New Arrival Widget
+                    RowText(
+                      onTap: () {
+                        context.push(AppRoutes.newArrival);
+                      },
+                      title: "New Arrival",
+                    ),
+                    2.sH,
                     SizedBox(
                       height: MediaQuery.of(context).size.height < 700
                           ? MediaQuery.of(context).size.height * 0.4
@@ -92,7 +107,13 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       child: const NewArrivalProductWidget(),
                     ),
                     2.sH,
-                    // Recommended Products Widget
+                    RowText(
+                      onTap: () {
+                        context.push(AppRoutes.recommendProduct);
+                      },
+                      title: "Recommended for you",
+                    ),
+                    2.sH,
                     SizedBox(
                       height: MediaQuery.of(context).size.height < 700
                           ? MediaQuery.of(context).size.height * 0.4
