@@ -20,7 +20,7 @@ class RecommendProductWidget extends ConsumerWidget {
           final product = products[index];
           return GestureDetector(
             onTap: () {
-              context.push(AppRoutes.details, extra: product);
+              context.push(AppRoutes.details, extra: products[index]);
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0),

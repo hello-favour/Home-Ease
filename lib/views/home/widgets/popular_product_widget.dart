@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
 import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/views/home/controller/product_controller.dart';
+import 'package:home_ease/views/home/detail/product_detail_view.dart';
 import 'package:home_ease/views/home/widgets/product_card.dart';
 
 class PopularProductWidget extends ConsumerWidget {
@@ -20,7 +21,7 @@ class PopularProductWidget extends ConsumerWidget {
           final product = products[index];
           return GestureDetector(
             onTap: () {
-              context.push(AppRoutes.details, extra: product);
+              context.push(AppRoutes.details, extra: products[index]);
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0),

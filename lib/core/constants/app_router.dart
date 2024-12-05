@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:home_ease/core/constants/app_wrapper_screen.dart';
+import 'package:home_ease/models/product_model.dart';
 import 'package:home_ease/views/auth/forgot_password_view.dart';
 import 'package:home_ease/views/auth/login_view.dart';
 import 'package:home_ease/views/auth/register_view.dart';
@@ -148,7 +149,10 @@ class CustomNavigationHelper {
     ),
     GoRoute(
       path: AppRoutes.details,
-      builder: (context, state) => const ProductDetailView(),
+      builder: (context, state) {
+        final product = state.extra as ProductsModel;
+        return ProductDetailView(product: product);
+      },
     ),
     StatefulShellRoute.indexedStack(
       parentNavigatorKey: parentNavigatorKey,

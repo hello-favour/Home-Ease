@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:home_ease/core/constants/app_colors.dart';
 import 'package:sizer/sizer.dart';
 
 class ProductCard extends StatelessWidget {
@@ -42,13 +44,12 @@ class ProductCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(8)),
-              child: Image.network(
-                imagePath,
+              child: CachedNetworkImage(
+                imageUrl: imagePath,
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          // Product Details
           Padding(
             padding: const EdgeInsets.all(12),
             child: Column(
@@ -70,28 +71,24 @@ class ProductCard extends StatelessWidget {
                     ),
                     Text(
                       '\$${price.toStringAsFixed(0)}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
                 ),
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.star,
                       size: 16,
-                      color: Colors.amber,
+                      color: AppColors.primaryColor,
                     ),
                     const SizedBox(width: 4),
                     Text(
                       rating.toString(),
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[600],
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!.apply(
+                            color: AppColors.darkGreyColor,
+                          ),
                     ),
                   ],
                 ),

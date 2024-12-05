@@ -1,11 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
-import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/gen/assets.gen.dart';
+import 'package:home_ease/models/product_model.dart';
 import 'package:home_ease/utils/app_button.dart';
 import 'package:home_ease/utils/extension.dart';
 import 'package:home_ease/views/home/detail/widgets/build_color_circle.dart';
@@ -13,7 +14,11 @@ import 'package:home_ease/views/home/detail/widgets/cart_dialog.dart';
 import 'package:sizer/sizer.dart';
 
 class ProductDetailView extends ConsumerStatefulWidget {
-  const ProductDetailView({super.key});
+  final ProductsModel product;
+  const ProductDetailView({
+    super.key,
+    required this.product,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -42,9 +47,7 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                   ),
                   const Spacer(),
                   GestureDetector(
-                    onTap: () {
-                      context.push(AppRoutes.profile);
-                    },
+                    onTap: () {},
                     child: Icon(
                       Icons.favorite_border,
                       color: AppColors.blackColor,
@@ -60,8 +63,8 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
-                        child: Image.asset(
-                          Assets.images.armchair1.path,
+                        child: CachedNetworkImage(
+                          imageUrl: widget.product.imagePath,
                           fit: BoxFit.contain,
                           height: MediaQuery.of(context).size.height * 0.35,
                         ),
@@ -74,7 +77,7 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Silky Way Sofa",
+                                widget.product.title,
                                 style:
                                     Theme.of(context).textTheme.headlineMedium,
                               ),
@@ -101,7 +104,7 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                                     color: AppColors.primaryColor, size: 16),
                                 const SizedBox(width: 4),
                                 Text(
-                                  "3.5",
+                                  widget.product.rating.toString(),
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
@@ -111,7 +114,7 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                       ),
                       2.sH,
                       Text(
-                        "High-quality materials, sturdy construction, and comfort provide excellent support. Designed for versatility, it’s perfect for spaces like the home, office, or shared areas, combining functionality with style",
+                        widget.product.description,
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.grey[700],
