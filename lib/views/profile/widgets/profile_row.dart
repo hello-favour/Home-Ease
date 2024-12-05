@@ -40,7 +40,7 @@ class ProfileRow extends StatelessWidget {
           child: Icon(
             Icons.arrow_forward_ios,
             size: 20,
-            color: AppColors.primaryColor,
+            color: AppColors.darkGreyColor,
           ),
         ),
       ],

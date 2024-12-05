@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -17,31 +18,13 @@ class ProfileView extends ConsumerStatefulWidget {
 }
 
 class _ProfileViewState extends ConsumerState<ProfileView> {
+  final bool value = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
-            2.sH,
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 6.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Spacer(),
-                  // GestureDetector(
-                  //   onTap: () {},
-                  //   child: const Icon(Icons.search),
-                  // ),
-                  Text(
-                    "Profile",
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  const Spacer(),
-                ],
-              ),
-            ),
             2.sH,
             Expanded(
               child: Padding(
@@ -54,16 +37,31 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                       backgroundColor: AppColors.color2,
                       backgroundImage: AssetImage(Assets.images.profile.path),
                     ),
-                    Text(
-                      "Jane Doe",
-                      style: Theme.of(context).textTheme.headlineMedium,
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Hi, ",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium!
+                                .apply(
+                                  color: AppColors.primaryColor,
+                                ),
+                          ),
+                          TextSpan(
+                            text: "Jane Doe",
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                        ],
+                      ),
                     ),
                     Text("jane@gmail.com",
-                        style: Theme.of(context).textTheme.bodyMedium),
+                        style: Theme.of(context).textTheme.titleSmall),
                     5.sH,
                     ProfileRow(
                       onTap: () {},
-                      title: 'My Orders',
+                      title: 'Orders',
                     ),
                     2.sH,
                     ProfileRow(
@@ -83,11 +81,32 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                       title: 'Wish List',
                     ),
                     2.sH,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Dark mode",
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        CupertinoSwitch(
+                          value: value,
+                          onChanged: (value) {},
+                        ),
+                      ],
+                    ),
+                    2.sH,
                     ProfileRow(
                       onTap: () {
                         context.push(AppRoutes.setting);
                       },
                       title: 'Setting',
+                    ),
+                    2.sH,
+                    ProfileRow(
+                      onTap: () {
+                        context.push(AppRoutes.forgotPassword);
+                      },
+                      title: 'Forgot password',
                     ),
                     2.sH,
                     ProfileRow(

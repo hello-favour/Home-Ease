@@ -38,8 +38,10 @@ class _FavoriteViewState extends ConsumerState<FavoriteView> {
                   ),
                   const Spacer(),
                   Text(
-                    "My Wishlist",
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    "Wishlist",
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   const Spacer(),
                   GestureDetector(
@@ -54,34 +56,6 @@ class _FavoriteViewState extends ConsumerState<FavoriteView> {
                   ),
                   Gap(3.w),
                 ],
-              ),
-              2.sH,
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(
-                    8,
-                    (_) => Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(99),
-                        child: Container(
-                          width: 20.w,
-                          padding: const EdgeInsets.all(6),
-                          color: AppColors.primaryColor,
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Chair",
-                            style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      color: AppColors.blackColor,
-                                    ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
               ),
               2.sH,
               Expanded(

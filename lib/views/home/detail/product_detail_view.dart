@@ -9,7 +9,6 @@ import 'package:home_ease/gen/assets.gen.dart';
 import 'package:home_ease/models/product_model.dart';
 import 'package:home_ease/utils/app_button.dart';
 import 'package:home_ease/utils/extension.dart';
-import 'package:home_ease/views/home/detail/widgets/build_color_circle.dart';
 import 'package:home_ease/views/home/detail/widgets/cart_dialog.dart';
 import 'package:sizer/sizer.dart';
 
@@ -78,14 +77,18 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                             children: [
                               Text(
                                 widget.product.title,
-                                style:
-                                    Theme.of(context).textTheme.headlineMedium,
-                              ),
-                              Text(
-                                "by Kester",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyMedium!
+                                    .headlineLarge!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                              Text(
+                                "by Admin",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge!
                                     .copyWith(
                                       color: AppColors.darkGreyColor,
                                     ),
@@ -121,20 +124,46 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                         ),
                       ),
                       2.sH,
-                      Text(
-                        "Color",
-                        style: Theme.of(context).textTheme.headlineSmall,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Subtotal",
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                          Text(
+                            '\$${(quantity * 800).toString()}',
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                        ],
                       ),
                       2.sH,
                       Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: List.generate(
-                          5,
-                          (context) => Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: buildColorCircle(AppColors.primaryColor),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Delivery",
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
-                        ),
+                          Text(
+                            "Standard - Free",
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                        ],
+                      ),
+                      2.sH,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Total",
+                            style: Theme.of(context).textTheme.headlineLarge,
+                          ),
+                          Text(
+                            '\$${(quantity * 800).toString()}',
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                        ],
                       ),
                       3.sH,
                       Row(
@@ -185,51 +214,22 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                   ),
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: AppColors.greyColor,
-          borderRadius: BorderRadius.circular(0),
-        ),
-        height: 10.h,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Total",
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: AppColors.darkGreyColor,
-                      ),
-                ),
-                Text(
-                  '\$${(quantity * 800).toString()}',
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: 40.w,
-              child: AppButton(
+              AppButton(
                 title: "Add to Cart",
                 onTap: () {
-                  showDialog(
+                  showModalBottomSheet(
                     context: context,
-                    builder: (context) => const CartDialog(),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(20.0)),
+                    ),
+                    builder: (context) => const CartBottomSheet(),
                   );
                 },
               ),
-            ),
-          ],
+              2.sH,
+            ],
+          ),
         ),
       ),
     );

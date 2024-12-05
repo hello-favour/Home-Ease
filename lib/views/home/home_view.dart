@@ -65,7 +65,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                           children: [
                             Text(
                               "Hey ${user.name}👋🏾",
-                              style: Theme.of(context).textTheme.headlineMedium,
+                              style: Theme.of(context).textTheme.headlineLarge,
                             ),
                             Icon(Icons.notifications,
                                 color: AppColors.blackColor),
@@ -73,7 +73,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                         ),
                         Text(
                           "Find your perfect \nproduct",
-                          style: Theme.of(context).textTheme.headlineMedium,
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
                       ],
                     ),

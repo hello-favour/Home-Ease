@@ -19,14 +19,16 @@ class RowText extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.headlineSmall,
+          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
         ),
         if (viewAll)
           GestureDetector(
             onTap: onTap,
             child: Text(
               "See All",
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     color: AppColors.color3,
                   ),
             ),

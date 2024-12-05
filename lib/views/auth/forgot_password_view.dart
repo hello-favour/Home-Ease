@@ -51,7 +51,10 @@ class ForgotPasswordView extends ConsumerWidget {
                       const Spacer(),
                       Text(
                         "Reset Password",
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
                       ),
                       const Spacer(),
                     ],

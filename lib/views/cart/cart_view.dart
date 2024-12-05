@@ -39,8 +39,10 @@ class _CartViewState extends ConsumerState<CartView> {
                   ),
                   const Spacer(),
                   Text(
-                    "My Cart",
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    "Cart",
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   const Spacer(),
                   GestureDetector(
