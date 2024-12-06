@@ -9,7 +9,8 @@ import 'package:home_ease/gen/assets.gen.dart';
 import 'package:home_ease/models/product_model.dart';
 import 'package:home_ease/utils/app_button.dart';
 import 'package:home_ease/utils/extension.dart';
-import 'package:home_ease/views/home/detail/widgets/cart_dialog.dart';
+import 'package:home_ease/views/home/controller/wishlist_controller.dart';
+import 'package:home_ease/views/home/detail/widgets/cart_bottom_sheet.dart';
 import 'package:sizer/sizer.dart';
 
 class ProductDetailView extends ConsumerStatefulWidget {
@@ -28,6 +29,8 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
   int quantity = 1;
   @override
   Widget build(BuildContext context) {
+    final isFavorite =
+        ref.watch(wishlistNotifierProvider).contains(widget.product);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -46,10 +49,18 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                   ),
                   const Spacer(),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      final wishlistNotifier =
+                          ref.read(wishlistNotifierProvider.notifier);
+                      if (isFavorite) {
+                        wishlistNotifier.removeFromWishlist(widget.product);
+                      } else {
+                        wishlistNotifier.addToWishlist(widget.product);
+                      }
+                    },
                     child: Icon(
-                      Icons.favorite_border,
-                      color: AppColors.blackColor,
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: isFavorite ? Colors.red : AppColors.blackColor,
                     ),
                   ),
                   Gap(3.w),

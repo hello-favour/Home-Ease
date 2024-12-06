@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
 import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/gen/assets.gen.dart';
 import 'package:home_ease/utils/extension.dart';
+import 'package:home_ease/views/home/controller/wishlist_controller.dart';
 import 'package:home_ease/views/home/widgets/product_card.dart';
 import 'package:sizer/sizer.dart';
 
-class FavoriteView extends ConsumerStatefulWidget {
+class FavoriteView extends ConsumerWidget {
   const FavoriteView({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _FavoriteViewState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final wishlist = ref.watch(wishlistNotifierProvider);
 
-class _FavoriteViewState extends ConsumerState<FavoriteView> {
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -44,44 +41,42 @@ class _FavoriteViewState extends ConsumerState<FavoriteView> {
                         ),
                   ),
                   const Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      context.push(AppRoutes.profile);
-                    },
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundColor: AppColors.color2,
-                      backgroundImage: AssetImage(Assets.images.profile.path),
-                    ),
-                  ),
-                  Gap(3.w),
                 ],
               ),
               2.sH,
               Expanded(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.7,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                  ),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        context.push(AppRoutes.details);
-                      },
-                      child: ProductCard(
-                        title: 'Trumin chair',
-                        price: 320,
-                        rating: 3.5,
-                        imagePath: Assets.images.armchair.path,
-                        background: AppColors.greyBgColor,
+                child: wishlist.isEmpty
+                    ? Center(
+                        child: Text(
+                          "Your wishlist is empty!",
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      )
+                    : GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.7,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                        ),
+                        itemBuilder: (context, index) {
+                          final product = wishlist[index];
+                          return GestureDetector(
+                            onTap: () {
+                              context.push(AppRoutes.details, extra: product);
+                            },
+                            child: ProductCard(
+                              title: product.title,
+                              price: product.price,
+                              rating: product.rating,
+                              imagePath: product.imagePath,
+                              background: AppColors.greyBgColor,
+                            ),
+                          );
+                        },
+                        itemCount: wishlist.length,
                       ),
-                    );
-                  },
-                  itemCount: 10,
-                ),
               ),
               1.sH,
             ],

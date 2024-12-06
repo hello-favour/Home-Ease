@@ -34,7 +34,7 @@ class CartBottomSheet extends StatelessWidget {
           AppButton(
             title: "View Cart",
             onTap: () {
-              context.push(AppRoutes.cart);
+              context.go(AppRoutes.cart);
             },
           ),
         ],
