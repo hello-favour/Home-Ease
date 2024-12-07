@@ -1,26 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
-import 'package:home_ease/core/constants/app_colors.dart';
-import 'package:home_ease/core/constants/app_router.dart';
-import 'package:home_ease/gen/assets.gen.dart';
-import 'package:home_ease/utils/app_button.dart';
 import 'package:home_ease/utils/extension.dart';
+import 'package:home_ease/views/cart/controller/cart_controller.dart';
 import 'package:home_ease/views/cart/widgets/cart_card.dart';
+import 'package:home_ease/utils/app_button.dart';
+import 'package:home_ease/core/constants/app_colors.dart';
 import 'package:sizer/sizer.dart';
 
-class CartView extends ConsumerStatefulWidget {
+class CartView extends ConsumerWidget {
   const CartView({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _CartViewState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cartState = ref
+        .watch(cartControllerProvider(FirebaseAuth.instance.currentUser!.uid));
 
-class _CartViewState extends ConsumerState<CartView> {
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -31,12 +26,6 @@ class _CartViewState extends ConsumerState<CartView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      context.pop();
-                    },
-                    child: SvgPicture.asset(Assets.icons.arrowLeft),
-                  ),
                   const Spacer(),
                   Text(
                     "Cart",
@@ -45,68 +34,118 @@ class _CartViewState extends ConsumerState<CartView> {
                         ),
                   ),
                   const Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      context.push(AppRoutes.profile);
-                    },
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundColor: AppColors.color2,
-                      backgroundImage: AssetImage(Assets.images.profile.path),
-                    ),
-                  ),
-                  Gap(3.w),
                 ],
               ),
               3.sH,
               Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  itemCount: 10,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: CartCard(
-                        background: AppColors.greyColor,
-                        title: 'Sofa Chair',
-                        price: 320,
-                        rating: 3.5,
-                        imagePath: Assets.images.image5.path,
-                      ),
+                child: cartState.when(
+                  data: (cartItems) {
+                    if (cartItems.isEmpty) {
+                      return Center(
+                        child: Text(
+                          "Your cart is empty.",
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      );
+                    }
+                    return ListView.builder(
+                      itemCount: cartItems.length,
+                      itemBuilder: (context, index) {
+                        final product = cartItems[index];
+                        return Dismissible(
+                          key: Key(product.id),
+                          direction: DismissDirection.endToStart,
+                          background: Container(
+                            alignment: Alignment.centerRight,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            color: Colors.red,
+                            child:
+                                const Icon(Icons.delete, color: Colors.white),
+                          ),
+                          onDismissed: (direction) async {
+                            await ref
+                                .read(cartControllerProvider(
+                                        FirebaseAuth.instance.currentUser!.uid)
+                                    .notifier)
+                                .removeFromCart(product.id);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content:
+                                    Text("${product.title} removed from cart."),
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 5.w),
+                            child: CartCard(
+                              background: AppColors.greyColor,
+                              title: product.title,
+                              price: product.price,
+                              rating: product.rating,
+                              imagePath: product.imagePath,
+                            ),
+                          ),
+                        );
+                      },
                     );
                   },
+                  loading: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  error: (error, _) => Center(
+                    child: Text(
+                      "Something went wrong: $error",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
                 ),
               ),
               2.sH,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              FutureBuilder<double>(
+                future: ref
+                    .read(cartControllerProvider(
+                            FirebaseAuth.instance.currentUser!.uid)
+                        .notifier)
+                    .getTotalAmount(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+                  if (snapshot.hasError) {
+                    return Text(
+                      "Error: ${snapshot.error}",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    );
+                  }
+                  final totalAmount = snapshot.data ?? 0.0;
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Total",
-                        style:
-                            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  color: AppColors.primaryColor,
-                                ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Total",
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                          Text(
+                            "\$${totalAmount.toStringAsFixed(2)}",
+                            style: Theme.of(context).textTheme.headlineLarge,
+                          ),
+                        ],
                       ),
-                      Text(
-                        "\$646.00",
-                        style: Theme.of(context).textTheme.headlineLarge,
+                      SizedBox(
+                        width: 40.w,
+                        child: AppButton(
+                          title: "Pay Now",
+                          onTap: () {
+                            // Add payment logic here
+                          },
+                        ),
                       ),
                     ],
-                  ),
-                  SizedBox(
-                    width: 40.w,
-                    child: AppButton(
-                      title: "Pay Now",
-                      onTap: () {},
-                    ),
-                  ),
-                ],
+                  );
+                },
               ),
               2.sH,
             ],

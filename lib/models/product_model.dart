@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class ProductsModel {
   final String id;
@@ -21,8 +20,6 @@ class ProductsModel {
   factory ProductsModel.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>?;
 
-    debugPrint("USER DATA ID:$data");
-
     if (data == null) {
       throw Exception('Document data is null');
     }
@@ -37,7 +34,6 @@ class ProductsModel {
     );
   }
 
-  // Optional: Add a method to convert to Map for Firestore
   Map<String, dynamic> toFirestore() {
     return {
       'title': title,
@@ -46,5 +42,23 @@ class ProductsModel {
       'price': price,
       'rating': rating,
     };
+  }
+
+  ProductsModel copyWith({
+    String? id,
+    String? title,
+    String? description,
+    String? imagePath,
+    double? price,
+    double? rating,
+  }) {
+    return ProductsModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      imagePath: imagePath ?? this.imagePath,
+      price: price ?? this.price,
+      rating: rating ?? this.rating,
+    );
   }
 }

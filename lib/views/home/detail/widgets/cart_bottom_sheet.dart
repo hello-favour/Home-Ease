@@ -4,8 +4,27 @@ import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/gen/assets.gen.dart';
 import 'package:home_ease/utils/app_button.dart';
 
-class CartBottomSheet extends StatelessWidget {
+class CartBottomSheet extends StatefulWidget {
   const CartBottomSheet({super.key});
+
+  @override
+  State<CartBottomSheet> createState() => _CartBottomSheetState();
+}
+
+class _CartBottomSheetState extends State<CartBottomSheet> {
+  bool isLoading = false;
+
+  void navigateToCart() {
+    setState(() {
+      isLoading = true;
+    });
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        isLoading = false;
+      });
+      context.go(AppRoutes.cart);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +51,8 @@ class CartBottomSheet extends StatelessWidget {
           ),
           const SizedBox(height: 30.0),
           AppButton(
-            title: "View Cart",
-            onTap: () {
-              context.go(AppRoutes.cart);
-            },
+            title: isLoading ? "Loading..." : "View Cart",
+            onTap: isLoading ? null : navigateToCart,
           ),
         ],
       ),

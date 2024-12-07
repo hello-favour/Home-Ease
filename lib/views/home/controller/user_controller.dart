@@ -9,12 +9,12 @@ final userControllerProvider =
 
 class UserController extends StateNotifier<AsyncValue<UserModel?>> {
   final Ref _ref;
-
   UserController(this._ref) : super(const AsyncValue.loading());
 
   Future<void> fetchUser(String userId) async {
+    state = const AsyncValue.loading();
+
     try {
-      state = const AsyncValue.loading();
       final user =
           await _ref.read(userRepositoryProvider).fetchUserDetails(userId);
       state = AsyncValue.data(user);

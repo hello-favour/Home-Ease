@@ -28,7 +28,7 @@ class LampView extends ConsumerWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      context.push(AppRoutes.home);
+                      context.go(AppRoutes.home);
                     },
                     child: SvgPicture.asset(Assets.icons.arrowLeft),
                   ),

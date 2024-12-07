@@ -7,6 +7,7 @@ class AppButton extends StatelessWidget {
   final VoidCallback? onTap;
   final bool isLoading;
   final bool isDisabled;
+  final Widget? child;
 
   const AppButton({
     super.key,
@@ -14,6 +15,7 @@ class AppButton extends StatelessWidget {
     required this.onTap,
     this.isLoading = false,
     this.isDisabled = false,
+    this.child,
   });
 
   @override
@@ -39,12 +41,13 @@ class AppButton extends StatelessWidget {
                   strokeWidth: 2,
                 ),
               )
-            : Text(
-                title,
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: AppColors.blackColor,
-                    ),
-              ),
+            : child ??
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: AppColors.blackColor,
+                      ),
+                ),
       ),
     );
   }

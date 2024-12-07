@@ -1,14 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
+import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/gen/assets.gen.dart';
 import 'package:home_ease/models/product_model.dart';
 import 'package:home_ease/utils/app_button.dart';
 import 'package:home_ease/utils/extension.dart';
+import 'package:home_ease/views/cart/controller/cart_controller.dart';
 import 'package:home_ease/views/home/controller/wishlist_controller.dart';
 import 'package:home_ease/views/home/detail/widgets/cart_bottom_sheet.dart';
 import 'package:sizer/sizer.dart';
@@ -27,6 +30,37 @@ class ProductDetailView extends ConsumerStatefulWidget {
 
 class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
   int quantity = 1;
+  bool isLoading = false;
+
+  Future<void> addToCart() async {
+    final cartController = ref.read(
+        cartControllerProvider(FirebaseAuth.instance.currentUser!.uid)
+            .notifier); // Replace with dynamic user ID
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      await cartController.addToCart(widget.product.copyWith());
+      setState(() {
+        isLoading = false;
+      });
+      showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+        ),
+        builder: (context) => const CartBottomSheet(),
+      );
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to add to cart: ${e.toString()}")),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isFavorite =
@@ -43,7 +77,7 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      context.pop();
+                      context.go(AppRoutes.home);
                     },
                     child: SvgPicture.asset(Assets.icons.arrowLeft),
                   ),
@@ -60,7 +94,9 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                     },
                     child: Icon(
                       isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? Colors.red : AppColors.blackColor,
+                      color: isFavorite
+                          ? AppColors.primaryColor
+                          : AppColors.blackColor,
                     ),
                   ),
                   Gap(3.w),
@@ -76,10 +112,13 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                         child: CachedNetworkImage(
                           imageUrl: widget.product.imagePath,
                           fit: BoxFit.contain,
-                          height: MediaQuery.of(context).size.height * 0.35,
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
                       ),
-                      2.sH,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -139,104 +178,67 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Subtotal",
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                          Text(
-                            '\$${(quantity * 800).toString()}',
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                        ],
-                      ),
-                      2.sH,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Delivery",
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                          Text(
-                            "Standard - Free",
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                        ],
-                      ),
-                      2.sH,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
                             "Total",
                             style: Theme.of(context).textTheme.headlineLarge,
                           ),
                           Text(
-                            '\$${(quantity * 800).toString()}',
+                            '\$${(quantity * widget.product.price).toStringAsFixed(2)}',
                             style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ],
                       ),
                       3.sH,
-                      Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.greyBgColor),
-                            ),
-                            child: IconButton(
-                              icon: const Icon(Icons.remove),
-                              onPressed: () {
-                                setState(() {
-                                  if (quantity > 1) quantity--;
-                                });
-                              },
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 12, horizontal: 12),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.greyBgColor),
-                            ),
-                            child: Text(
-                              quantity.toString(),
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.greyBgColor),
-                            ),
-                            child: IconButton(
-                              icon: const Icon(Icons.add),
-                              onPressed: () {
-                                setState(() {
-                                  quantity++;
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Container(
+                      //       decoration: BoxDecoration(
+                      //         border: Border.all(color: AppColors.greyBgColor),
+                      //       ),
+                      //       child: IconButton(
+                      //         icon: const Icon(Icons.remove),
+                      //         onPressed: () {
+                      //           setState(() {
+                      //             if (quantity > 1) quantity--;
+                      //           });
+                      //         },
+                      //       ),
+                      //     ),
+                      //     Container(
+                      //       padding: const EdgeInsets.symmetric(
+                      //           vertical: 12, horizontal: 12),
+                      //       decoration: BoxDecoration(
+                      //         border: Border.all(color: AppColors.greyBgColor),
+                      //       ),
+                      //       child: Text(
+                      //         quantity.toString(),
+                      //         style: const TextStyle(
+                      //           fontSize: 18,
+                      //           fontWeight: FontWeight.bold,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     Container(
+                      //       decoration: BoxDecoration(
+                      //         border: Border.all(color: AppColors.greyBgColor),
+                      //       ),
+                      //       child: IconButton(
+                      //         icon: const Icon(Icons.add),
+                      //         onPressed: () {
+                      //           setState(() {
+                      //             quantity++;
+                      //           });
+                      //         },
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),
               ),
               AppButton(
-                title: "Add to Cart",
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(20.0)),
-                    ),
-                    builder: (context) => const CartBottomSheet(),
-                  );
-                },
+                title: isLoading ? "Adding..." : "Add to Cart",
+                onTap: isLoading ? null : addToCart,
               ),
               2.sH,
             ],

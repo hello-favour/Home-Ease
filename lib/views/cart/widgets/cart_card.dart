@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
@@ -44,17 +45,9 @@ class CartCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             child: Container(
               height: double.infinity,
-              child: Image(
-                image: AssetImage(imagePath),
+              child: CachedNetworkImage(
+                imageUrl: imagePath,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.grey[200],
-                    child: const Center(
-                      child: Icon(Icons.error_outline),
-                    ),
-                  );
-                },
               ),
             ),
           ),
@@ -101,24 +94,6 @@ class CartCard extends StatelessWidget {
                             fontSize: 14,
                             color: Colors.grey[600],
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "+",
-                          style: Theme.of(context).textTheme.headlineMedium,
-                        ),
-                        Gap(3.w),
-                        Text(
-                          "1",
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        Gap(3.w),
-                        Text(
-                          "-",
-                          style: Theme.of(context).textTheme.headlineMedium,
                         ),
                       ],
                     ),
