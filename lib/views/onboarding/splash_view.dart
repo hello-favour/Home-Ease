@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:home_ease/core/constants/app_router.dart';
 import 'package:home_ease/gen/assets.gen.dart';
 import 'package:home_ease/views/auth/controller/auth_controller.dart';
+import 'package:home_ease/views/auth/state/auth_state.dart';
 import 'package:sizer/sizer.dart';
 
 class SplashView extends ConsumerStatefulWidget {
@@ -14,25 +15,37 @@ class SplashView extends ConsumerStatefulWidget {
 }
 
 class _SplashViewState extends ConsumerState<SplashView> {
+  bool _isNavigated = false;
+
   @override
   void initState() {
     super.initState();
 
-    ref.listenManual(
-      authControllerProvider.select((asyncValue) => asyncValue.value),
-      (previous, next) {
-        if (next != null) {
-          Future.delayed(const Duration(seconds: 3), () {
-            if (ref.read(authServiceProvider).isAuthenticated) {
-              context.go(AppRoutes.home);
-            } else {
-              context.go(AppRoutes.getStarted);
-            }
-          });
-        }
-      },
-      fireImmediately: true,
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Use listenManual for proper listening outside build
+      ref.listenManual<AsyncValue<AuthState>>(
+        authControllerProvider,
+        (previous, next) {
+          next.whenOrNull(
+            data: (authState) {
+              if (!_isNavigated) {
+                _isNavigated = true; // Prevent duplicate navigation
+                Future.delayed(const Duration(seconds: 3), () {
+                  if (authState.status == AuthStatus.newUser) {
+                    context.go(AppRoutes.getStarted);
+                  } else if (authState.status == AuthStatus.loggedOut) {
+                    context.go(AppRoutes.login);
+                  } else if (authState.status == AuthStatus.loggedIn) {
+                    context.go(AppRoutes.home);
+                  }
+                });
+              }
+            },
+          );
+        },
+        fireImmediately: true, // Listen immediately for the current state
+      );
+    });
   }
 
   @override

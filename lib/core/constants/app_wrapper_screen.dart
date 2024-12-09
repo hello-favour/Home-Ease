@@ -99,6 +99,7 @@ class _AppWrapperScreenState extends State<AppWrapperScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: null,
       body: SafeArea(child: widget.child),
       bottomNavigationBar: Container(
         padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 12),

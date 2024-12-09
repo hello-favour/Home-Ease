@@ -77,16 +77,6 @@ class SettingView extends ConsumerWidget {
                         textInputType: TextInputType.emailAddress,
                       ),
                       3.sH,
-                      const AppTextfield(
-                        label: "Password",
-                        textInputType: TextInputType.visiblePassword,
-                      ),
-                      3.sH,
-                      const AppTextfield(
-                        label: "Confirm Password",
-                        textInputType: TextInputType.visiblePassword,
-                      ),
-                      3.sH,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:home_ease/models/user_model.dart';
 
 class AuthRepository {
@@ -18,7 +19,8 @@ class AuthRepository {
     });
   }
 
-  Future<UserModel> signUp(String email, String password, String name) async {
+  Future<UserModel> signUp(
+      String email, String password, String name, String? profileBase64) async {
     try {
       UserCredential userCredential =
           await _firebaseAuth.createUserWithEmailAndPassword(
@@ -30,9 +32,14 @@ class AuthRepository {
         id: userCredential.user!.uid,
         email: email,
         name: name,
+        profileImage: profileBase64.toString(),
       );
 
       await _firestore.collection('users').doc(user.id).set(user.toMap());
+
+      // Mark this as the first login for the user
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isFirstLogin', true);
 
       return user;
     } on FirebaseAuthException catch (e) {
@@ -62,6 +69,10 @@ class AuthRepository {
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
     await _googleSignIn.signOut();
+
+    // Mark user as logged out
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isFirstLogin', false);
   }
 
   Future<void> forgotPassword(String email) async {
@@ -92,6 +103,7 @@ class AuthRepository {
         id: userCredential.user!.uid,
         email: userCredential.user!.email!,
         name: userCredential.user!.displayName ?? 'No Name',
+        profileImage: userCredential.user!.photoURL ?? 'No profile',
       );
 
       // Store user data in Firestore if not already present
@@ -104,5 +116,10 @@ class AuthRepository {
     } catch (e) {
       throw e.toString();
     }
+  }
+
+  Future<bool> isFirstLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isFirstLogin') ?? true;
   }
 }

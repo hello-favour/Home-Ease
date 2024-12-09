@@ -12,7 +12,7 @@ import 'package:home_ease/models/product_model.dart';
 import 'package:home_ease/utils/app_button.dart';
 import 'package:home_ease/utils/extension.dart';
 import 'package:home_ease/views/cart/controller/cart_controller.dart';
-import 'package:home_ease/views/home/controller/wishlist_controller.dart';
+import 'package:home_ease/views/favorite/controller/favorite_controller.dart';
 import 'package:home_ease/views/home/detail/widgets/cart_bottom_sheet.dart';
 import 'package:sizer/sizer.dart';
 
@@ -63,8 +63,13 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
 
   @override
   Widget build(BuildContext context) {
-    final isFavorite =
-        ref.watch(wishlistNotifierProvider).contains(widget.product);
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+
+    // Fetch wishlist items from FavoriteController
+    final isFavorite = ref
+        .watch(favoriteControllerProvider(userId))
+        .any((item) => item.id == widget.product.id);
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -83,13 +88,14 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                   ),
                   const Spacer(),
                   GestureDetector(
-                    onTap: () {
-                      final wishlistNotifier =
-                          ref.read(wishlistNotifierProvider.notifier);
+                    onTap: () async {
+                      final favoriteController =
+                          ref.read(favoriteControllerProvider(userId).notifier);
                       if (isFavorite) {
-                        wishlistNotifier.removeFromWishlist(widget.product);
+                        await favoriteController
+                            .removeFromWishlist(widget.product);
                       } else {
-                        wishlistNotifier.addToWishlist(widget.product);
+                        await favoriteController.addToWishlist(widget.product);
                       }
                     },
                     child: Icon(

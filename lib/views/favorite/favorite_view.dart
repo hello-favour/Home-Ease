@@ -1,12 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:home_ease/core/constants/app_colors.dart';
 import 'package:home_ease/core/constants/app_router.dart';
-import 'package:home_ease/gen/assets.gen.dart';
 import 'package:home_ease/utils/extension.dart';
-import 'package:home_ease/views/home/controller/wishlist_controller.dart';
+import 'package:home_ease/views/favorite/controller/favorite_controller.dart';
 import 'package:home_ease/views/home/widgets/product_card.dart';
 import 'package:sizer/sizer.dart';
 
@@ -15,7 +14,9 @@ class FavoriteView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final wishlist = ref.watch(wishlistNotifierProvider);
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+
+    final wishlist = ref.watch(favoriteControllerProvider(userId));
 
     return Scaffold(
       body: SafeArea(
@@ -27,12 +28,6 @@ class FavoriteView extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      context.pop();
-                    },
-                    child: SvgPicture.asset(Assets.icons.arrowLeft),
-                  ),
                   const Spacer(),
                   Text(
                     "Wishlist",
@@ -60,22 +55,51 @@ class FavoriteView extends ConsumerWidget {
                           crossAxisSpacing: 16,
                           mainAxisSpacing: 16,
                         ),
+                        itemCount: wishlist.length,
                         itemBuilder: (context, index) {
                           final product = wishlist[index];
-                          return GestureDetector(
-                            onTap: () {
-                              context.push(AppRoutes.details, extra: product);
-                            },
-                            child: ProductCard(
-                              title: product.title,
-                              price: product.price,
-                              rating: product.rating,
-                              imagePath: product.imagePath,
-                              background: AppColors.greyBgColor,
-                            ),
+
+                          return Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  context.push(AppRoutes.details,
+                                      extra: product);
+                                },
+                                child: ProductCard(
+                                  title: product.title,
+                                  price: product.price,
+                                  rating: product.rating,
+                                  imagePath: product.imagePath,
+                                  background: AppColors.greyBgColor,
+                                ),
+                              ),
+                              Positioned(
+                                top: 8,
+                                right: 8,
+                                child: IconButton(
+                                  icon: const Icon(Icons.delete,
+                                      color: Colors.red),
+                                  onPressed: () async {
+                                    final favoriteController = ref.read(
+                                        favoriteControllerProvider(userId)
+                                            .notifier);
+                                    await favoriteController
+                                        .removeFromWishlist(product);
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            "${product.title} removed from wishlist."),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
                           );
                         },
-                        itemCount: wishlist.length,
                       ),
               ),
               1.sH,
